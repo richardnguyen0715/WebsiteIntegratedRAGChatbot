@@ -3,6 +3,54 @@
 {% block title %}Section 1{% endblock %}
 
 {% block content %}
-<h1>Section 1 Charts</h1>
-<p>This section contains various charts.</p>
+<div class="dashboard">
+    <!-- Widget Container -->
+    <div class="widget-container">
+        <div class="widget">
+            <h3>Avg First Reply Time</h3>
+            <p>30 : 15 min</p>
+        </div>
+        <div class="widget">
+            <h3>Avg Full Resolve Time</h3>
+            <p>22 : 40 min</p>
+        </div>
+        <div class="widget">
+            <h3>Messages</h3>
+            <p>25%</p>
+        </div>
+        <div class="widget">
+            <h3>Emails</h3>
+            <p>75%</p>
+        </div>
+    </div>
+
+    <!-- Chart Container -->
+    <div class="chart-container">
+        <div class="chart-item" id="line-chart"></div>
+        <div class="chart-item" id="pie-chart"></div>
+        <div class="chart-item" id="bar-chart"></div>
+    </div>
+</div>
+
+<script>
+    // Line Chart
+    Plotly.newPlot('line-chart', {{ line_chart | safe }}, {
+        paper_bgcolor: '#1a1d24',
+        plot_bgcolor: '#1a1d24',
+        font: { color: '#ffffff' }
+    });
+
+    // Pie Chart
+    Plotly.newPlot('pie-chart', {{ pie_chart | safe }}, {
+        paper_bgcolor: '#1a1d24',
+        font: { color: '#ffffff' }
+    });
+
+    // Bar Chart
+    Plotly.newPlot('bar-chart', {{ bar_chart | safe }}, {
+        paper_bgcolor: '#1a1d24',
+        plot_bgcolor: '#1a1d24',
+        font: { color: '#ffffff' }
+    });
+</script>
 {% endblock %}

@@ -1,14 +1,76 @@
 /* Global styles */
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f5f7fa;
-    color: #333;
+    background-color: #1a1d24;
+    color: white;
+    margin: 0;
 }
 
 .layout {
     display: flex;
     height: 100vh;
+}
+
+/* Dashboard Layout */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Widget Container */
+.widget-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.widget {
+    flex: 1;
+    background-color: #2a2d36;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.widget h3 {
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 10px;
+}
+
+.widget p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Chart Container */
+.chart-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* Chart Item */
+.chart-item {
+    background-color: #2a2d36;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    min-height: 300px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .widget-container {
+        flex-direction: column;
+    }
+
+    .chart-container {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Sidebar styles */
@@ -48,7 +110,7 @@ body {
 
 .main-content h1 {
     font-size: 24px;
-    color: #1a1d24;
+    color: white;
 }
 
 /* Chat Icon */
@@ -238,3 +300,4 @@ body {
     justify-content: center;
     align-items: center;
 }
+
