@@ -38,11 +38,11 @@
      - If the `.kaggle` folder does not exist, create it manually.
 3. Run Data Collection: `Source\DataCollection\DataCollection.ipynb`
 4. Run Data Preprocessing: `Source\DataPreProcessing\DataPreprocessing.ipynb`
-5. Run Data Exploration: 
-   5.1 `Source\DataExploration\DataExploration_01.ipynb`
-   5.2 `Source\DataExploration\DataExploration_02.ipynb`
+5. Run Data Exploration:\
+   5.1 `Source\DataExploration\DataExploration_01.ipynb`\
+   5.2 `Source\DataExploration\DataExploration_02.ipynb`\
    5.3 `Source\DataExploration\DataExploration_03.ipynb`
-7. Run Dashboard.
+7. Run Dashboard.\
    6.1 `Source\DashboardSource\main.py`
 
 ## Repository Introducing:
