@@ -8,7 +8,7 @@
 
    - Go to the [Kaggle](https://www.kaggle.com/) homepage and log in to your account.
 
-   2.2* Download API Token*:
+   2.2 *Download API Token*:
 
    - Click on your profile picture in the upper right corner and select **"My Account"**.
 
