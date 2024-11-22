@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div class="layout">
@@ -53,7 +54,36 @@
             </div>
         </div>
     </div>
+    <!-- Chatbox Respnose Script -->
+    <script>
+        document.querySelector("#send-button").addEventListener("click", async () => {
+            const userMessage = document.querySelector("#user-input").value.trim();
+            if (!userMessage) return; // Không gửi tin nhắn trống
     
+            // Hiển thị tin nhắn người dùng
+            const messagesDiv = document.querySelector("#messages");
+            messagesDiv.innerHTML += `<div class="user-message"><strong>You:</strong> ${userMessage}</div>`;
+    
+            // Gửi tin nhắn tới Flask server
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ message: userMessage }),
+                });
+    
+                const data = await response.json();
+                messagesDiv.innerHTML += `<div class="bot-message"><strong>Bot:</strong> ${data.response}</div>`;
+            } catch (error) {
+                messagesDiv.innerHTML += `<div class="bot-message"><strong>Bot:</strong> Error connecting to server</div>`;
+            }
+    
+            // Reset input
+            document.querySelector("#user-input").value = "";
+        });
+    </script>
 
 
     <script src="/static/script.js"></script>

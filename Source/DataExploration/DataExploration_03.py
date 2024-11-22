@@ -3,7 +3,7 @@ from Shared_Functions import *
 
 #-------------------- Thực hiện xử lý các hàm dưới này nha mấy ní.
 
-def section_home_01():
+def section_03_01():
     line_chart = go.Figure(data=[
         go.Scatter(x=["Jan", "Feb", "Mar", "Apr"], y=[10, 15, 13, 17], name="Tickets Created"),
         go.Scatter(x=["Jan", "Feb", "Mar", "Apr"], y=[8, 12, 11, 14], name="Tickets Solved")

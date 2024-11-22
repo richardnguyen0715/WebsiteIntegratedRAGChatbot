@@ -9,45 +9,73 @@ function sendMessage() {
     const message = inputBox.value.trim();
 
     if (message) {
-        // user chat
+        // Thêm tin nhắn của người dùng
         const userMessage = document.createElement('div');
         userMessage.className = 'chat-message user';
-
-        const userIcon = document.createElement('div');
-        userIcon.className = 'user-icon';
-        userIcon.innerHTML = '<i class="fas fa-user"></i>';
 
         const messageContent = document.createElement('div');
         messageContent.className = 'message-content';
         messageContent.textContent = message;
 
-        userMessage.appendChild(userIcon);
         userMessage.appendChild(messageContent);
-
         chatMessages.appendChild(userMessage);
 
-        inputBox.value = '';
+        inputBox.value = ''; // Reset input box
 
-        // chat bot response
-        setTimeout(() => {
-            const botMessage = document.createElement('div');
-            botMessage.className = 'chat-message bot';
+        // Hiển thị trạng thái loading trong khi chờ phản hồi
+        const loadingMessage = document.createElement('div');
+        loadingMessage.className = 'chat-message bot loading';
+        loadingMessage.textContent = 'Bot is typing...';
+        chatMessages.appendChild(loadingMessage);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            const botIcon = document.createElement('div');
-            botIcon.className = 'bot-icon';
-            botIcon.innerHTML = '<i class="fas fa-robot"></i>';
+        // Gửi tin nhắn tới backend
+        fetch("/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message: message }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Xóa trạng thái loading
+                chatMessages.removeChild(loadingMessage);
 
-            const botMessageContent = document.createElement('div');
-            botMessageContent.className = 'message-content';
-            botMessageContent.textContent = `This is a response to "${message}"`;
+                // Thêm phản hồi của bot
+                const botMessage = document.createElement('div');
+                botMessage.className = 'chat-message bot';
 
-            botMessage.appendChild(botIcon);
-            botMessage.appendChild(botMessageContent);
+                const botMessageContent = document.createElement('div');
+                botMessageContent.className = 'message-content';
 
-            chatMessages.appendChild(botMessage);
+                try {
+                    // Xử lý Markdown
+                    const markdownResponse = data.response || 'No response provided.';
+                    const htmlContent = marked.parse(markdownResponse);
+                    botMessageContent.innerHTML = htmlContent; // Chèn HTML đã chuyển đổi
+                } catch (error) {
+                    console.error("Error parsing Markdown:", error);
+                    botMessageContent.textContent = "Error processing response.";
+                }
 
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }, 1000);
+                botMessage.appendChild(botMessageContent);
+                chatMessages.appendChild(botMessage);
+
+                // Tự động cuộn xuống cuối
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                chatMessages.removeChild(loadingMessage); // Xóa trạng thái loading
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'chat-message bot error';
+                errorMessage.textContent = "Error connecting to server.";
+                chatMessages.appendChild(errorMessage);
+            });
+
+        // Tự động cuộn xuống cuối sau khi thêm tin nhắn người dùng
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 }
 
