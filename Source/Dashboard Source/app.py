@@ -46,6 +46,9 @@ def query_lmstudio(prompt):
     except Exception as e:
         return f"Error connecting to LM Studio: {e}"
 
+
+#---------------------------------------------------- Không chỉnh sửa vùng ở trên. Trừ việc thêm thư viện vào.
+
 @app.route('/')
 def homepage():
     line_chart_json, pie_chart_json, bar_chart_json = section_home_01()
