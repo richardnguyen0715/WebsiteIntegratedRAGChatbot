@@ -39,7 +39,7 @@ def query_lmstudio(prompt):
             }
         )
         if response.status_code == 200:
-            # Trích xuất nội dung phản hồi
+            # Get the response message from the LLM model
             return response.json()["choices"][0]["message"]["content"]
         else:
             return f"Error {response.status_code}: {response.text}"
