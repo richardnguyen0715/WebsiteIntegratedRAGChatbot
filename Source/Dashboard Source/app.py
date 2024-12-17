@@ -60,9 +60,15 @@ def homepage():
         bar_chart=bar_chart_json
     )
 
-@app.route("/section1")
+@app.route('/section1')
 def section1():
-    return render_template('section1.html')
+    bar_avg_chart_json, bar_min_max_chart_json, pie_chart_json = section_01_01()
+    return render_template(
+        'section1.html',
+        bar_avg_chart=bar_avg_chart_json,       # Average scores
+        bar_min_max_chart=bar_min_max_chart_json,  # Min/Max scores
+        pie_chart=pie_chart_json                # Subject coverage
+    )
 
 @app.route('/section2')
 def section2():

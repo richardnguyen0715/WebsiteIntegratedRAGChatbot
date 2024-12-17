@@ -4,5 +4,34 @@
 
 {% block content %}
 <h1>Section 1 Charts</h1>
-<p>This section contains data visualization.</p>
+<p>This section contains data visualizations for THPT 2022 scores.</p>
+<!-- Bar Chart: Average Scores by Subject -->
+<div>
+    <h3>Average Scores by Subject</h3>
+    <div id="bar-avg-chart"></div>
+    <script>
+        var barAvgChartData = {{ bar_avg_chart | safe }};
+        Plotly.newPlot('bar-avg-chart', barAvgChartData.data, barAvgChartData.layout);
+    </script>
+</div>
+
+<!-- Bar Chart: Minimum and Maximum Scores -->
+<div>
+    <h3>Minimum and Maximum Scores by Subject</h3>
+    <div id="bar-minmax-chart"></div>
+    <script>
+        var barMinMaxChartData = {{ bar_min_max_chart | safe }};
+        Plotly.newPlot('bar-minmax-chart', barMinMaxChartData.data, barMinMaxChartData.layout);
+    </script>
+</div>
+
+<!-- Pie Chart: Subject Coverage -->
+<div>
+    <h3>Subject Coverage (Data Availability)</h3>
+    <div id="pie-chart"></div>
+    <script>
+        var pieChartData = {{ pie_chart | safe }};
+        Plotly.newPlot('pie-chart', pieChartData.data, pieChartData.layout);
+    </script>
+</div>
 {% endblock %}
