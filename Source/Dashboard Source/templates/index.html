@@ -6,53 +6,38 @@
 <h1>Welcome to the Dashboard</h1>
 <p>This is the main page of your Flask dashboard.</p>
 <div class="dashboard">
-    <!-- Widget Container -->
+    <!-- Widget Container for Dataset Information -->
     <div class="widget-container">
         <div class="widget">
-            <h3>Avg First Reply Time</h3>
-            <p>30 : 15 min</p>
+            <h3>Number of Rows</h3>
+            <p>{{ num_rows }}</p> <!-- Display number of rows in dataset -->
         </div>
         <div class="widget">
-            <h3>Avg Full Resolve Time</h3>
-            <p>22 : 40 min</p>
+            <h3>Number of Columns</h3>
+            <p>{{ num_columns }}</p> <!-- Display number of columns in dataset -->
         </div>
         <div class="widget">
-            <h3>Messages</h3>
-            <p>25%</p>
+            <h3>Column Names</h3>
+            <p>{{ column_names }}</p> <!-- Display names of columns -->
         </div>
         <div class="widget">
-            <h3>Emails</h3>
-            <p>75%</p>
+            <h3>Missing Values</h3>
+            <p>{{ missing_values }}</p> <!-- Display information about missing values -->
         </div>
     </div>
 
-    <!-- Chart Container -->
-    <div class="chart-container">
-        <div class="chart-item" id="line-chart"></div>
-        <div class="chart-item" id="pie-chart"></div>
-        <div class="chart-item" id="bar-chart"></div>
+    <!-- Additional Information about Dataset -->
+    <div class="dataset-info">
+        <h3>Dataset Overview</h3>
+        <p>
+            This dataset contains information on various subjects' exam scores for the THPT 2022 exam. 
+            The dataset includes columns such as <strong>{{ column_names }}</strong>, 
+            representing subjects like Mathematics, Literature, Physics, and more.
+        </p>
     </div>
 </div>
 
 <script>
-    // Line Chart
-    Plotly.newPlot('line-chart', {{ line_chart | safe }}, {
-        paper_bgcolor: '#1a1d24',
-        plot_bgcolor: '#1a1d24',
-        font: { color: '#ffffff' }
-    });
-
-    // Pie Chart
-    Plotly.newPlot('pie-chart', {{ pie_chart | safe }}, {
-        paper_bgcolor: '#1a1d24',
-        font: { color: '#ffffff' }
-    });
-
-    // Bar Chart
-    Plotly.newPlot('bar-chart', {{ bar_chart | safe }}, {
-        paper_bgcolor: '#1a1d24',
-        plot_bgcolor: '#1a1d24',
-        font: { color: '#ffffff' }
-    });
+    // Here you can add additional JavaScript to handle any dataset-specific functionality
 </script>
 {% endblock %}

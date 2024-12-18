@@ -28,7 +28,7 @@ import pandas as pd
 # Dữ liệu mẫu
 data = pd.read_csv('Dataset/THPTQG_2022_processed.csv')
 # Convert to DataFrame
-df = pd.DataFrame(data)
+raw_df = pd.DataFrame(data)
 # Hàm làm tròn điểm về bội số gần nhất của 0.25
 def lam_tron_diem(diem):
     # Check if diem is NaN
@@ -36,7 +36,7 @@ def lam_tron_diem(diem):
         return diem  # Return NaN as is
     return round(diem / 0.25) * 0.25
 # Loại bỏ cột 'id'
-df = df.drop(columns=['id'])
+df = raw_df.drop(columns=['id'])
 df['literature_score'] = df['literature_score'].apply(lam_tron_diem)
 #đổi tên các cột về tên môn
 df = df.rename(columns={

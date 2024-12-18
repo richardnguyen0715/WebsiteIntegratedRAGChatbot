@@ -51,14 +51,17 @@ def query_lmstudio(prompt):
 
 @app.route('/')
 def homepage():
-    line_chart_json, pie_chart_json, bar_chart_json = section_home_01()
+    # Giả sử df là DataFrame chứa dataset
+    num_rows = raw_df.shape[0]  # Số hàng
+    num_columns = raw_df.shape[1]  # Số cột
+    column_names = ', '.join(raw_df.columns)  # Tên các cột
+    missing_values = raw_df.isnull().sum().to_dict()  # Thông tin về giá trị thiếu
 
-    return render_template(
-        "index.html",
-        line_chart=line_chart_json,
-        pie_chart=pie_chart_json,
-        bar_chart=bar_chart_json
-    )
+    return render_template('index.html', 
+                           num_rows=num_rows, 
+                           num_columns=num_columns,
+                           column_names=column_names,
+                           missing_values=missing_values)
 
 @app.route('/section1')
 def section1():
