@@ -6,32 +6,76 @@
 <h1>Section 1 Charts</h1>
 <p>This section contains data visualizations for THPT 2022 scores.</p>
 <!-- Bar Chart: Average Scores by Subject -->
-<div>
-    <h3>Average Scores by Subject</h3>
-    <div id="bar-avg-chart"></div>
-    <script>
-        var barAvgChartData = {{ bar_avg_chart | safe }};
-        Plotly.newPlot('bar-avg-chart', barAvgChartData.data, barAvgChartData.layout);
-    </script>
+<!-- Row 1: Average Scores by Subject and Subject Coverage -->
+<div style="display: flex; justify-content: space-between;">
+    <!-- Hình 1: Average Scores by Subject -->
+    <div style="width: 48%;">
+        <h3>Điểm trung bình của từng môn học</h3>
+        <div id="bar-avg-chart"></div>
+        <script>
+            var barAvgChartData = {{ bar_avg_chart | safe }};
+            Plotly.newPlot('bar-avg-chart', barAvgChartData.data, barAvgChartData.layout);
+        </script>
+    </div>
+
+    <!-- Hình 2: Subject Coverage (Data Availability) -->
+    <div style="width: 48%;">
+        <h3>Số lượng học sinh tham gia thi mỗi môn</h3>
+        <div id="pie-chart"></div>
+        <script>
+            var pieChartData = {{ pie_chart | safe }};
+            Plotly.newPlot('pie-chart', pieChartData.data, pieChartData.layout);
+        </script>
+    </div>
 </div>
 
-<!-- Bar Chart: Minimum and Maximum Scores -->
+<!-- Row 2: Phân bố điểm thi các môn (Histograms + Bảng thống kê) -->
 <div>
-    <h3>Minimum and Maximum Scores by Subject</h3>
-    <div id="bar-minmax-chart"></div>
-    <script>
-        var barMinMaxChartData = {{ bar_min_max_chart | safe }};
-        Plotly.newPlot('bar-minmax-chart', barMinMaxChartData.data, barMinMaxChartData.layout);
-    </script>
-</div>
+    <h3>Phân bố điểm thi các môn</h3>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+        {% for subject, histogram_data in histogram_charts.items() %}
+            <div style="width: 48%; margin-bottom: 20px;">
+                <!-- Histogram Chart -->
+                <h4>{{ subject }}</h4>
+                <div id="histogram-{{ subject }}"></div>
+                <script>
+                    var histogramData = {{ histogram_data | safe }};
+                    Plotly.newPlot('histogram-{{ subject }}', histogramData.data, histogramData.layout);
+                </script>
 
-<!-- Pie Chart: Subject Coverage -->
-<div>
-    <h3>Subject Coverage (Data Availability)</h3>
-    <div id="pie-chart"></div>
-    <script>
-        var pieChartData = {{ pie_chart | safe }};
-        Plotly.newPlot('pie-chart', pieChartData.data, pieChartData.layout);
-    </script>
+                <!-- Bảng thống kê -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Chỉ số</th>
+                            <th>Giá trị</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Điểm trung bình</td>
+                            <td>{{ summary_stats[subject].mean }}</td>
+                        </tr>
+                        <tr>
+                            <td>Trung vị</td>
+                            <td>{{ summary_stats[subject].median }}</td>
+                        </tr>
+                        <tr>
+                            <td>Số thí sinh đạt điểm dưới 1</td>
+                            <td>{{ summary_stats[subject].below_1_count }}</td>
+                        </tr>
+                        <tr>
+                            <td>Số thí sinh đạt điểm dưới trung bình</td>
+                            <td>{{ summary_stats[subject].below_avg_count }}</td>
+                        </tr>
+                        <tr>
+                            <td>Mốc điểm trung bình phổ biến nhất</td>
+                            <td>{{ summary_stats[subject].mode }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
