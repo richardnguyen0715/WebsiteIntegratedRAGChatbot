@@ -32,9 +32,10 @@
 <!-- Row 2: Phân bố điểm thi các môn (Histograms + Bảng thống kê) -->
 <div>
     <h3>Phân bố điểm thi các môn</h3>
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    <div style="display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px;">
         {% for subject, histogram_data in histogram_charts.items() %}
-            <div style="width: 48%; margin-bottom: 20px;">
+            <!-- Mỗi môn học sẽ có một hàng riêng với biểu đồ và bảng thống kê -->
+            <div style="margin-bottom: 30px;">
                 <!-- Histogram Chart -->
                 <h4>{{ subject }}</h4>
                 <div id="histogram-{{ subject }}"></div>
@@ -78,4 +79,5 @@
         {% endfor %}
     </div>
 </div>
+
 {% endblock %}
