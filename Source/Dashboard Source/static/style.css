@@ -5,6 +5,19 @@ body {
     color: white;
     margin: 0;
 }
+body.home-page {
+    background-image: url('/static/background_01.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+body.home-page h1{
+    background-color: transparent; /* Xóa nền */
+    border: none; /* Xóa viền */
+    margin: 0; /* Loại bỏ khoảng cách thừa */
+    text-align: center; /* Căn giữa */
+    color: #ffffff; /* Chữ trắng (nếu phù hợp với nền) */
+}
 
 .layout {
     display: flex;
@@ -28,24 +41,28 @@ body {
 
 .widget {
     flex: 1;
-    background-color: #2a2d36;
+    background-color: rgba(0, 0, 0, 0.6); /* Nền trong suốt */
     border-radius: 10px;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    color: #f1f1f1; /* Màu chữ sáng */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Đổ bóng */
 }
 
 .widget h3 {
     font-size: 14px;
-    color: #bbb;
+    color: #c4c4c4; /* Màu chữ phụ */
     margin-bottom: 10px;
 }
 
 .widget p {
     font-size: 24px;
     font-weight: bold;
+    color: #ffffff; /* Chữ chính sáng hơn */
 }
-
+.widget h3, .widget p {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
 /* Chart Container */
 .chart-container {
     display: grid;
@@ -60,17 +77,6 @@ body {
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     min-height: 300px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .widget-container {
-        flex-direction: column;
-    }
-
-    .chart-container {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* Sidebar styles */
@@ -132,11 +138,6 @@ body {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.chat-input button {
-    z-index: 100; /* Đảm bảo không chồng lấn lên icon mở khung chat */
-}
-
-/* Chat Window */
 /* Chat Window */
 .chat-window {
     position: fixed;
@@ -228,52 +229,16 @@ body {
 }
 
 /* Messages Container - Fixed Scrolling */
-/* Đảm bảo nội dung tin nhắn không vượt ra ngoài khung */
-.chat-message .message-content {
-    word-wrap: break-word; /* Ngắt dòng khi cần thiết */
-    white-space: pre-wrap; /* Giữ nguyên khoảng trắng và xuống dòng */
-    background-color: #f1f1f1; /* Nền tin nhắn bot */
-    padding: 10px 15px;
-    border-radius: 10px;
-    max-width: 100%; /* Đảm bảo nội dung không vượt quá khung */
-    overflow-x: auto; /* Bật cuộn ngang nếu nội dung quá dài */
-    display: block;
-}
-
-/* Xử lý mã code hoặc markdown */
-.chat-message .message-content pre {
-    background-color: #eaeaea; /* Màu nền cho đoạn mã */
-    border-radius: 8px;
-    padding: 10px;
-    overflow-x: auto; /* Bật cuộn ngang nếu mã quá dài */
-    font-family: "Courier New", monospace;
-    font-size: 14px;
-    color: #333; /* Màu chữ trong đoạn mã */
-    margin: 10px 0;
-}
-
-/* Xử lý danh sách và markdown đặc biệt */
-.chat-message .message-content ul {
-    margin: 10px 0;
-    padding-left: 20px;
-}
-
-.chat-message .message-content li {
-    list-style-type: disc; /* Kiểu danh sách */
-    margin-left: 15px;
-}
-
-/* Đảm bảo khung chat có chiều cao động */
 .chat-messages {
     flex-grow: 1;
-    overflow-y: auto; /* Bật cuộn dọc */
+    overflow-y: auto;
     padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Khoảng cách giữa các tin nhắn */
+    gap: 10px;
     max-height: calc(100% - 80px); /* Trừ đi phần khung nhập liệu */
-    scrollbar-width: thin; /* Thanh cuộn mỏng */
-    scrollbar-color: #007bff transparent; /* Màu thanh cuộn */
+    scrollbar-width: thin;
+    scrollbar-color: #007bff transparent;
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -285,38 +250,9 @@ body {
     border-radius: 4px;
 }
 
-
-/* Message Bubbles - Enhanced Design */
-.chat-message {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 4px;
-    animation: messageSlide 0.3s ease-out;
-}
-
-@keyframes messageSlide {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.chat-message .message-content {
-    padding: 12px 16px;
-    border-radius: 15px;
-    max-width: 85%;
-    font-size: 14px;
-    line-height: 1.4;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
 /* User Message Specific Styles */
 .chat-message.user {
-    margin-left: 20%; /* Give space on the left for user messages */
+    margin-left: 20%;
     justify-content: flex-end;
 }
 
@@ -324,7 +260,7 @@ body {
     background-color: #007bff;
     color: white;
     border-bottom-right-radius: 4px;
-    margin-right: 4px; /* Reduced right margin */
+    margin-right: 4px;
 }
 
 .bot-icon {
@@ -336,7 +272,6 @@ body {
     border-radius: 50%;
     background-color: rgb(13, 240, 240);
     margin-right: 8px;
-    flex-shrink: 0;
 }
 
 .bot-icon img {
@@ -358,22 +293,9 @@ body {
     padding: 6px 12px;
     margin: 0;
     line-height: 1.2;
-    display: block; /* Changed from inline-block to block */
-    white-space: normal; /* Allow text to wrap */
-    word-wrap: break-word; /* Ensure long words break */
-    width: fit-content; /* Make container fit content width */
 }
 
-/* Add this to adjust the bot message container */
-.chat-message.bot {
-    margin-right: 20%;
-    display: flex;
-    align-items: flex-start;
-    padding: 0;
-    margin-bottom: 4px;
-}
-
-/* Input Area - Fixed Position */
+/* Input Area */
 .chat-input {
     padding: 12px 16px;
     background-color: white;
@@ -393,7 +315,6 @@ body {
     border: 1px solid #e9ecef;
     border-radius: 20px;
     font-size: 14px;
-    transition: all 0.2s ease;
     background-color: #f8f9fa;
 }
 
@@ -413,7 +334,6 @@ body {
     color: white;
     border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -421,7 +341,6 @@ body {
 
 .chat-input button:hover {
     background-color: #0056b3;
-    transform: scale(1.05);
 }
 
 /* Responsive Design */
@@ -433,54 +352,41 @@ body {
         right: 0;
         border-radius: 15px 15px 0 0;
     }
-    
+
     .chat-body {
         height: calc(100% - 60px);
     }
-    
+
     .chat-messages {
         padding: 12px;
     }
 }
 
-.chat-message.bot .message-content h1 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 8px;
+.dataset-info {
+    background-color: rgba(0, 0, 0, 0.5); /* Nền đen trong suốt */
+    color: #fff; /* Chữ trắng nổi bật */
+    padding: 15px;
+    border-radius: 10px;
 }
 
-.chat-message.bot .message-content h2,
-.chat-message.bot .message-content h3 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 6px;
+.dataset-info p {
+    color: #f1f1f1; /* Chữ sáng hơn nền */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Bóng nhẹ */
+}
+.home-page h1 {
+    color: #fff; /* Màu chữ trắng */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Tạo bóng chữ */
+    background-color: rgba(0, 0, 0, 0.5); /* Nền mờ */
+    padding: 10px 20px; /* Khoảng cách nội dung */
+    border-radius: 10px; /* Bo góc nền */
+    display: inline-block; /* Nền chỉ bao quanh chữ */
 }
 
-.chat-message.bot .message-content p {
-    margin: 3px 0;
-}
-
-.chat-message.bot .message-content ul {
-    padding-left: 20px;
-    margin: 3px 0;
-}
-
-.chat-message.bot .message-content li {
-    list-style-type: disc;
-    margin-left: 10px;
-}
-
-.chat-message.bot .message-content strong {
-    font-weight: bold;
-}
-
-.chat-message.bot .message-content em {
-    font-style: italic;
-}
-
-.chat-message.bot .message-content code {
-    font-family: monospace;
-    background-color: #f1f1f1;
-    padding: 2px 4px;
-    border-radius: 4px;
+.home-page p {
+    color: #f1f1f1; /* Màu chữ sáng */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Bóng chữ nhẹ */
+    background-color: rgba(0, 0, 0, 0.4); /* Nền mờ */
+    padding: 8px 15px; /* Khoảng cách nội dung */
+    border-radius: 8px; /* Bo góc nền */
+    display: inline-block; /* Nền chỉ bao quanh nội dung */
 }

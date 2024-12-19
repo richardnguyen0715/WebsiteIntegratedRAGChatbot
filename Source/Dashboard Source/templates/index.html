@@ -3,8 +3,10 @@
 {% block title %}Homepage{% endblock %}
 
 {% block content %}
-<h1>Welcome to the Dashboard</h1>
-<p>This is the main page of your Flask dashboard.</p>
+<body class="home-page">
+    <h1>Welcome to the Dashboard</h1>
+    <!-- Các thành phần khác -->
+</body>
 <div class="dashboard">
     <!-- Widget Container for Dataset Information -->
     <div class="widget-container">
@@ -36,8 +38,7 @@
         </p>
     </div>
 </div>
-
-<script>
-    // Here you can add additional JavaScript to handle any dataset-specific functionality
-</script>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 {% endblock %}
