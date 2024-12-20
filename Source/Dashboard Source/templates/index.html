@@ -4,27 +4,27 @@
 
 {% block content %}
 <body class="home-page">
-    <h1>Welcome to the Dashboard</h1>
+    <h1>Welcome to the Dashboard!</h1>
     <!-- Các thành phần khác -->
 </body>
 <div class="dashboard">
     <!-- Widget Container for Dataset Information -->
     <div class="widget-container">
         <div class="widget">
-            <h3>Number of Rows</h3>
-            <p>{{ num_rows }}</p> <!-- Display number of rows in dataset -->
+            <h3>Name Of Datasets</h3>
+            <p>THPTQG_2022_processed.csv</p> <!-- Display number of rows in dataset -->
         </div>
         <div class="widget">
-            <h3>Number of Columns</h3>
-            <p>{{ num_columns }}</p> <!-- Display number of columns in dataset -->
+            <h3>Source</h3>
+            <p>Kaggle</p> <!-- Display number of columns in dataset -->
         </div>
         <div class="widget">
-            <h3>Column Names</h3>
-            <p>{{ column_names }}</p> <!-- Display names of columns -->
+            <h3>Numbers Of Columns</h3>
+            <p>{{ num_columns }}</p> <!-- Display names of columns -->
         </div>
         <div class="widget">
-            <h3>Missing Values</h3>
-            <p>{{ missing_values }}</p> <!-- Display information about missing values -->
+            <h3>Numbers Of Rows</h3>
+            <p>{{ num_rows }}</p> <!-- Display information about missing values -->
         </div>
     </div>
 

@@ -3,11 +3,13 @@
 {% block title %}Section 1{% endblock %}
 
 {% block content %}
-<h1>Section 1 Charts</h1>
-<p>This section contains data visualizations for THPT 2022 scores.</p>
+<body class="Section-1">
+    <h1>Section 1 Charts</h1>
+    <p>This section contains data visualizations for THPT 2022 scores.</p>
+</body>
 <!-- Bar Chart: Average Scores by Subject -->
 <!-- Row 1: Average Scores by Subject and Subject Coverage -->
-<div style="display: flex; justify-content: space-between;">
+<div style="display: flex; justify-content: space-between; margin-bottom: 50px;">
     <!-- Hình 1: Average Scores by Subject -->
     <div style="width: 48%;">
         <h3>Điểm trung bình của từng môn học</h3>
@@ -32,7 +34,7 @@
 <!-- Row 2: Phân bố điểm thi các môn (Histograms + Bảng thống kê) -->
 <div>
     <h3>Phân bố điểm thi các môn</h3>
-    <div style="display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px;">
+    <div style="display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px; margin-top: 50px;">
         {% for subject, histogram_data in histogram_charts.items() %}
             <!-- Mỗi môn học sẽ có một hàng riêng với biểu đồ và bảng thống kê -->
             <div style="margin-bottom: 30px;">

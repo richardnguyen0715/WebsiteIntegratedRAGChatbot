@@ -11,14 +11,18 @@ body.home-page {
     background-repeat: no-repeat;
     background-position: center;
 }
-body.home-page h1{
-    background-color: transparent; /* Xóa nền */
-    border: none; /* Xóa viền */
-    margin: 0; /* Loại bỏ khoảng cách thừa */
-    text-align: center; /* Căn giữa */
-    color: #ffffff; /* Chữ trắng (nếu phù hợp với nền) */
+body.home-page h1 {
+    text-align: center; /* Căn giữa theo chiều ngang */
+    font-weight: bold; /* Làm chữ đậm */
+    color: #ebeaf1; /* Màu chữ trắng */
+    margin: 0; /* Loại bỏ khoảng cách mặc định */
+    position: absolute; /* Đặt vị trí tuyệt đối */
+    top: 10px; /* Căn chỉnh khoảng cách từ trên xuống */
+    left: 50%; /* Đưa điểm giữa phần tử về giữa trang */
+    transform: translateX(-50%); /* Dịch chuyển để chữ căn giữa hoàn toàn */
+    z-index: 10; /* Đảm bảo chữ nằm trên cùng */
+    font-size: 40px; /* Kích thước chữ */
 }
-
 .layout {
     display: flex;
     height: 100vh;
@@ -26,10 +30,13 @@ body.home-page h1{
 
 /* Dashboard Layout */
 .dashboard {
+    margin-top: 50px; /* Đẩy toàn bộ dashboard xuống */
+    position: relative; /* Đảm bảo dashboard không chồng lấn */
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 20px;
+    font-size: 1rem;
 }
 
 /* Widget Container */
@@ -41,24 +48,24 @@ body.home-page h1{
 
 .widget {
     flex: 1;
-    background-color: rgba(0, 0, 0, 0.6); /* Nền trong suốt */
+    background-color: rgba(0,0,0,0.5); /* Nền trong suốt */
     border-radius: 10px;
     padding: 20px;
     text-align: center;
     color: #f1f1f1; /* Màu chữ sáng */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Đổ bóng */
+    /*box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Đổ bóng */
 }
 
 .widget h3 {
-    font-size: 14px;
-    color: #c4c4c4; /* Màu chữ phụ */
+    font-size: 24px;
+    color: #ffffff; 
     margin-bottom: 10px;
 }
 
 .widget p {
     font-size: 24px;
     font-weight: bold;
-    color: #ffffff; /* Chữ chính sáng hơn */
+    color: #ffffff; /*Chữ chính sáng hơn */
 }
 .widget h3, .widget p {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
@@ -82,11 +89,17 @@ body.home-page h1{
 /* Sidebar styles */
 .sidebar {
     width: 70px;
-    background-color: #1a1d24;
+    background-color: #1d5ae7;
+    position: fixed; /* Đặt sidebar cố định */
+    top: 0;
+    bottom: 0;
+    left: 0; /* Đảm bảo thanh sidebar luôn ở bên trái */
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px 0;
+    overflow-y: auto; /* Đảm bảo cuộn khi nội dung quá dài */
+    z-index: 1000; /* Đặt trên các phần tử khác */
 }
 
 .sidebar a {
@@ -110,11 +123,15 @@ body.home-page h1{
 
 /* Main content styles */
 .main-content {
+    margin-left: 70px; /* Thụt lề bằng với chiều rộng của sidebar */
+    padding: 20px; /* Khoảng cách nội dung bên trong */
     flex-grow: 1;
-    padding: 20px;
 }
 
 .main-content h1 {
+    margin-left: 70px; /* Thụt lề bằng với chiều rộng của sidebar */
+    padding: 20px; /* Khoảng cách nội dung bên trong */
+    flex-grow: 1;
     font-size: 24px;
     color: white;
 }
@@ -376,7 +393,7 @@ body.home-page h1{
 .home-page h1 {
     color: #fff; /* Màu chữ trắng */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Tạo bóng chữ */
-    background-color: rgba(0, 0, 0, 0.5); /* Nền mờ */
+    /*background-color: rgba(0, 0, 0, 0.5); /* Nền mờ */
     padding: 10px 20px; /* Khoảng cách nội dung */
     border-radius: 10px; /* Bo góc nền */
     display: inline-block; /* Nền chỉ bao quanh chữ */
@@ -390,3 +407,25 @@ body.home-page h1{
     border-radius: 8px; /* Bo góc nền */
     display: inline-block; /* Nền chỉ bao quanh nội dung */
 }
+/* thêm màu nên cho section-1 */
+body.Section-1 {
+    background-color: #1c96ca;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Đổ bóng */
+}
+/* chỉnh chữ cho section-1 vô trung tâm */
+.Section-1 h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+/*chỉnh dòng phân bố điểm thi trong thẻ h3 vào giữa trong section-1 */
+.Section-1 h3 {
+    text-align: center;
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+/* tạo khoảng cách giữa dòng phần bố điểm  các môn với 2 hình ở trên to lên 1 xíu, ý tôi là tạo khoảng cách giữa row 2 với ảnh của row 1 á */
