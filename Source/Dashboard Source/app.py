@@ -76,8 +76,13 @@ def section1():
 
 @app.route('/section2')
 def section2():
-    return render_template('section2.html')
-
+    histogram_charts_json, summary_stats_json= section_02_01()
+    return render_template(
+        'section2.html',
+        histogram_charts=histogram_charts_json,
+        summary_stats= summary_stats_json
+        )
+                           
 @app.route('/section3')
 def section3():
     return render_template('section3.html')

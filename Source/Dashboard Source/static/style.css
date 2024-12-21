@@ -414,6 +414,13 @@ body.Section-1 {
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Đổ bóng */
 }
+/*thêm màu nền cho section-2 */
+body.Section-2 {
+    background-color: #1c96ca;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Đổ bóng */
+}
 /* chỉnh chữ cho section-1 vô trung tâm */
 .Section-1 h1 {
     text-align: center;

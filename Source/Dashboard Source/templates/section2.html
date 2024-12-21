@@ -3,6 +3,65 @@
 {% block title %}Section 2{% endblock %}
 
 {% block content %}
-<h1>Section 2 Charts</h1>
-<p>This section contains data visualization.</p>
+<body class="Section-2">
+    <h1>Section 2 Charts</h1>
+    <p>This section contains data visualizations for THPT 2022 scores.</p>
+</body>
+<div>
+    <h3>Phân bố điểm thi các khối</h3>
+    <div style="display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px; margin-top: 50px;">
+        {% for block, histogram_data in histogram_charts.items() %}
+            <!-- Mỗi khối sẽ có một hàng riêng với biểu đồ và bảng thống kê -->
+            <div style="margin-bottom: 30px;">
+                <!-- Histogram Chart -->
+                <h4>Khối {{ block }}</h4>
+                <div id="histogram-{{ block }}"></div>
+                <script>
+                    var histogramData = {{ histogram_data | safe }};
+                    Plotly.newPlot('histogram-{{ block }}', histogramData.data, histogramData.layout);
+                </script>
+
+                <!-- Bảng thống kê -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Chỉ số</th>
+                            <th>Giá trị</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Điểm trung bình</td>
+                            <td>{{ summary_stats[block].mean }}</td>
+                        </tr>
+                        <tr>
+                            <td>Trung vị</td>
+                            <td>{{ summary_stats[block].median }}</td>
+                        </tr>
+                        <tr>
+                            <td>Số thí sinh đạt điểm dưới 1</td>
+                            <td>{{ summary_stats[block].below_1_count }}</td>
+                        </tr>
+                        <tr>
+                            <td>Số thí sinh đạt điểm dưới trung bình</td>
+                            <td>{{ summary_stats[block].below_avg_count }}</td>
+                        </tr>
+                        <tr>
+                            <td>Mốc điểm trung bình phổ biến nhất</td>
+                            <td>{{ summary_stats[block].mode }}</td>
+                        </tr>
+                        <tr>
+                            <td>Số thí sinh đạt điểm >= 30</td>
+                            <td>{{ summary_stats[block].above_30_count }}</td>
+                        </tr>
+                        <tr>
+                            <td>Số thí sinh đạt điểm < 10</td>
+                            <td>{{ summary_stats[block].below_10_count }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
