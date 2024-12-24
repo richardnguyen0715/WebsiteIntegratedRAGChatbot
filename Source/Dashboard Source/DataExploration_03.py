@@ -4,6 +4,40 @@ import pandas as pd
 import plotly.graph_objects as go
 import json
 import seaborn as sns
+def analyze_student_performance(df):
+    # Calculate total score for each student
+    df['total_score'] = df[['Toán', 'Văn', 'Vật Lý', 'Hóa Học', 'Sinh Học', 
+                           'Tiếng Anh', 'Lịch Sử', 'Địa Lý', 'GDCD']].sum(axis=1)
+    
+    # Define high performers (top 25%)
+    high_score_threshold = df['total_score'].quantile(0.75)
+    high_performers = df[df['total_score'] >= high_score_threshold]
+    
+    # Analyze subject patterns
+    performance_analysis = {
+        'threshold': high_score_threshold,
+        'avg_scores': {subject: high_performers[subject].mean() 
+                      for subject in df.columns if subject != 'total_score'},
+        'subject_correlations': {subject: df[subject].corr(df['total_score']) 
+                               for subject in df.columns if subject != 'total_score'}
+    }
+    
+    # Find successful subject combinations
+    high_score_subjects = []
+    for subject in df.columns:
+        if subject != 'total_score':
+            high_score_count = len(df[df[subject] >= 8])
+            high_score_subjects.append((subject, high_score_count))
+    
+    top_subjects = sorted(high_score_subjects, key=lambda x: x[1], reverse=True)[:3]
+    
+    performance_analysis['top_subjects'] = {
+        'subjects': [x[0] for x in top_subjects],
+        'counts': [x[1] for x in top_subjects],
+        'avg_score': high_performers['total_score'].mean()
+    }
+    
+    return performance_analysis
 
 def section_03_01():
     # Load and prepare data
@@ -133,6 +167,7 @@ def section_03_01():
         margin=dict(l=50, r=50, t=80, b=50)
     )
     launch_pad_json = json.dumps(launch_pad, cls=plotly.utils.PlotlyJSONEncoder)
-    
-    return heatmap_json, strongest_correlations, weakest_correlations, launch_pad_stats, launch_pad_json
+    prediction_results = analyze_student_performance(df)
+    return (heatmap_json, strongest_correlations, weakest_correlations, 
+            launch_pad_stats, launch_pad_json, prediction_results)
     

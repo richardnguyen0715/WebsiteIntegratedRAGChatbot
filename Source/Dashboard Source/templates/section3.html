@@ -157,6 +157,38 @@
                 {% endfor %}
             </div>
         </div>
+        <div style="text-align: center; margin-bottom: 50px;">
+            <h3 style="text-align: center;">Dự đoán xu hướng điểm cao</h3>
+            <div style="text-align: left; margin-top: 20px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                <h4 style="color: white; margin-bottom: 10px;">Đặc điểm học sinh đạt điểm cao:</h4>
+                <ul style="color: white; list-style-type: disc; margin-left: 20px;">
+                    <li><strong>Ngưỡng điểm xác định học sinh khá giỏi:</strong>
+                        <p>Từ {{ "%.2f"|format(performance_analysis.threshold) }} điểm trở lên (top 25%)</p>
+                    </li>
+                    <li><strong>Tổ hợp môn học tiềm năng:</strong>
+                        <ul style="margin-top: 5px; margin-left: 20px;">
+                            {% for subject in performance_analysis.top_subjects.subjects %}
+                            <li>{{ subject }} (Điểm trung bình: {{ "%.2f"|format(performance_analysis.avg_scores[subject]) }})</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li><strong>Đặc điểm của nhóm học sinh này:</strong>
+                        <ul style="margin-top: 5px; margin-left: 20px;">
+                            <li>Điểm trung bình tổng: {{ "%.2f"|format(performance_analysis.top_subjects.avg_score) }}</li>
+                            <li>Số lượng học sinh xuất sắc: {{ performance_analysis.top_subjects.counts[0] }}</li>
+                        </ul>
+                    </li>
+                    <li><strong>Kết luận dự đoán:</strong>
+                        <p>Học sinh có khả năng đạt điểm cao khi:</p>
+                        <ul style="margin-top: 5px; margin-left: 20px;">
+                            <li>Tập trung vào các môn GDCD, Địa lý, Lịch sử</li>
+                            <li>Duy trì điểm số ổn định ở các môn Toán, Văn</li>
+                            <li>Chú trọng môn Tiếng Anh để nâng cao tổng điểm</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </body>
 
