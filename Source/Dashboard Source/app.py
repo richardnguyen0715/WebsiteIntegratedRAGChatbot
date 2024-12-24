@@ -65,13 +65,14 @@ def homepage():
 
 @app.route('/section1')
 def section1():
-    bar_avg_chart_json, pie_chart_json, histogram_charts, summary_stats= section_01_01()
+    bar_avg_chart_json, pie_chart_json, histogram_charts, summary_stats,boxplot_chart_json = section_01_01()
     return render_template(
         'section1.html',
         bar_avg_chart=bar_avg_chart_json,
         pie_chart=pie_chart_json,
         histogram_charts=histogram_charts,
-        summary_stats=summary_stats
+        summary_stats=summary_stats,
+        boxplot_chart=boxplot_chart_json
     )
 
 @app.route('/section2')

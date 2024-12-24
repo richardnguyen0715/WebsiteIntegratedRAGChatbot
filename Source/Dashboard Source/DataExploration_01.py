@@ -50,7 +50,17 @@ df = df.rename(columns={
     'geography_score': 'Địa Lý',
     'civic_education_score': 'GDCD'
 })
-
+subject_colors = {
+    'Toán': 'red',
+    'Văn': 'blue',
+    'Vật Lý': 'green',
+    'Hóa Học': 'purple',
+    'Sinh Học': 'orange',
+    'Tiếng Anh': 'brown',
+    'Lịch Sử': 'pink',
+    'Địa Lý': 'cyan',
+    'GDCD': 'magenta'
+}
 #-------------------- Thực hiện xử lý các hàm dưới này nha mấy ní.
 
 def section_01_01():
@@ -76,7 +86,7 @@ def section_01_01():
     pie_chart = go.Figure(data=[
         go.Pie(labels=coverage.index, values=coverage.values)
     ])
-    pie_chart.update_layout(title="Số lượng học sinh đã thi mỗi môn")
+    pie_chart.update_layout(title="Tỉ lệ học sinh đã thi mỗi môn")
     pie_chart_json = json.dumps(pie_chart, cls=plotly.utils.PlotlyJSONEncoder)
 
     # 4. Histogram: Distribution of Scores by Subject
@@ -91,6 +101,8 @@ def section_01_01():
         median_score = scores.median()
         below_avg_count = len(scores[scores < mean_score])
         mode_score = scores.mode()[0] if not scores.mode().empty else None  # Mốc điểm trung bình phổ biến nhất
+        #tính độ lệch chuẩn
+        std = scores.std()
         
         # Tạo bảng thống kê
         summary_stats[column] = {
@@ -98,7 +110,8 @@ def section_01_01():
             'median': median_score,
             'below_1_count': below_1_count,
             'below_avg_count': below_avg_count,
-            'mode': mode_score
+            'mode': mode_score,
+            'std': std
         }
         # Tính tần số xuất hiện của từng điểm số (cụ thể từ 0.0 đến 10.0 với bước 0.25)
         unique_scores = sorted(scores.unique())  # Lấy các điểm số duy nhất
@@ -133,4 +146,24 @@ def section_01_01():
 
         histogram_charts[column] = json.dumps(hist, cls=plotly.utils.PlotlyJSONEncoder)
 
-    return bar_avg_chart_json, pie_chart_json, histogram_charts, summary_stats
+   # 4. Boxplot: Score Distribution by Subject
+    boxplot_chart = go.Figure()
+    for column in df.columns:
+        scores = df[column].dropna()
+        boxplot_chart.add_trace(
+            go.Box(
+                y=scores,
+                name=column,
+                boxmean='sd', 
+                marker_color=subject_colors.get(column, 'gray') 
+            )
+        )
+
+    boxplot_chart.update_layout(
+        title="Phân bố điểm số của các môn học",
+        yaxis_title="Điểm số",
+        xaxis_title="Môn học"
+    )
+    boxplot_chart_json = json.dumps(boxplot_chart, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return bar_avg_chart_json, pie_chart_json, histogram_charts, summary_stats, boxplot_chart_json

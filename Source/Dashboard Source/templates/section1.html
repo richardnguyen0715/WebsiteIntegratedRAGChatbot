@@ -22,7 +22,7 @@
 
     <!-- Hình 2: Subject Coverage (Data Availability) -->
     <div style="width: 48%;">
-        <h3>Số lượng học sinh tham gia thi mỗi môn</h3>
+        <h3>Tỉ lệ học sinh tham gia thi mỗi môn</h3>
         <div id="pie-chart"></div>
         <script>
             var pieChartData = {{ pie_chart | safe }};
@@ -75,11 +75,24 @@
                             <td>Mốc điểm trung bình phổ biến nhất</td>
                             <td>{{ summary_stats[subject].mode }}</td>
                         </tr>
+                        <tr>
+                            <td>Độ lệch chuẩn</td>
+                            <td>{{ summary_stats[subject].std }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         {% endfor %}
     </div>
 </div>
-
+<!-- Row 3: Phân bố điểm thi các môn (Box plots) -->
+ <!-- Row 3: Phân bố điểm thi các môn (Box plots) -->
+<div>
+    <h3>Phân bố điểm số các môn học</h3>
+    <div id="boxplot-chart" style="margin-bottom: 50px;"></div>
+    <script>
+        var boxplotChartData = {{ boxplot_chart | safe }};
+        Plotly.newPlot('boxplot-chart', boxplotChartData.data, boxplotChartData.layout);
+    </script>
+</div>
 {% endblock %}
