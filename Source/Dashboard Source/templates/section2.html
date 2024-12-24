@@ -4,62 +4,106 @@
 
 {% block content %}
 <body class="Section-2">
-    <h1>Section 2 Charts</h1>
-    <p>This section contains data visualizations for THPT 2022 scores.</p>
+    <h1 style="justify-self: center;">Phần 2: Phân tích tổng quan nhóm học sinh theo điểm mạnh, điểm yếu</h1>
 </body>
 <div>
-    <h3>Phân bố điểm thi các khối</h3>
-    <div style="display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px; margin-top: 50px;">
+    <h3 style ="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 30px;">Phân loại học sinh dựa theo thiên hướng học tập </h3>
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
+        <!-- Biểu đồ donut phân loại học sinh -->
+        <div id="student-group-donut-chart" style="width: 50%; margin-top: 20px;"></div>
+        <script>
+            var studentGroupDonutChartData = {{ student_group_donut_chart | safe }};
+            Plotly.newPlot('student-group-donut-chart', studentGroupDonutChartData.data, studentGroupDonutChartData.layout);
+        </script>
+        <!-- Biểu đồ cột xếp chồng phân loại học sinh theo khối thi -->
+        <div id="student-stacked-bar-chart" style="width: 50%; margin-top: 20px;"></div>
+        <script>
+            var studentStackedBarChartData = {{ student_stacked_bar_chart | safe }};
+            Plotly.newPlot('student-stacked-bar-chart', studentStackedBarChartData.data, studentStackedBarChartData.layout);
+        </script>
+    </div>
+
+    <h3 style ="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 30px;">Phân bố điểm thi và những điểm mạnh, yếu của các học sinh theo từng khối</h3>
+    <div style="display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 20px;">
         {% for block, histogram_data in histogram_charts.items() %}
             <!-- Mỗi khối sẽ có một hàng riêng với biểu đồ và bảng thống kê -->
             <div style="margin-bottom: 30px;">
-                <!-- Histogram Chart -->
-                <h4>Khối {{ block }}</h4>
-                <div id="histogram-{{ block }}"></div>
+                <h4 style="font-size: 24px;">Khối {{ block }}</h4>
+                <div style="display: flex; align-items: flex-start;">               
+                     <!-- Histogram Chart -->                    
+                    <div id="histogram-{{ block }}" style="display: flex; flex-direction: row; justify-content: space-between; width: 70%; margin-right: 30px;"></div>
+                    <script>
+                        var histogramData = {{ histogram_data | safe }};
+                        Plotly.newPlot('histogram-{{ block }}', histogramData.data, histogramData.layout);
+                    </script>
+
+                    <!-- Bảng thống kê -->
+                    <table style="width: 40%; margin-top: 50px;">
+                        <thead>
+                            <tr>
+                                <th>Chỉ số</th>
+                                <th>Giá trị</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Điểm trung bình</td>
+                                <td>{{ summary_stats[block].mean }}</td>
+                            </tr>
+                            <tr>
+                                <td>Trung vị</td>
+                                <td>{{ summary_stats[block].median }}</td>
+                            </tr>
+                            <tr>
+                                <td>Số thí sinh đạt điểm dưới 1</td>
+                                <td>{{ summary_stats[block].below_1_count }}</td>
+                            </tr>
+                            <tr>
+                                <td>Số thí sinh đạt điểm dưới trung bình</td>
+                                <td>{{ summary_stats[block].below_avg_count }}</td>
+                            </tr>
+                            <tr>
+                                <td>Mốc điểm trung bình phổ biến nhất</td>
+                                <td>{{ summary_stats[block].mode }}</td>
+                            </tr>
+                            <tr>
+                                <td>Số thí sinh đạt điểm >= 30</td>
+                                <td>{{ summary_stats[block].above_30_count }}</td>
+                            </tr>
+                            <tr>
+                                <td>Số thí sinh đạt điểm < 10</td>
+                                <td>{{ summary_stats[block].below_10_count }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Biểu đồ tròn -->
+                <div style="display: flex; justify-content: space-between; margin-top: 30px; gap: 20px">
+                    <div id="pie-chart-{{ block }}" style="width: 50%;"></div>
+                    <script>
+                        var pieChartData = {{ pie_charts[block] | safe }};
+                        Plotly.newPlot('pie-chart-{{ block }}', pieChartData.data, pieChartData.layout);
+                    </script>
+                    <!-- Biểu đồ cột nhóm -->
+                    <div id="grouped-bar-{{ block }}" style="width: 50%;"></div>
+                    <script>
+                        var groupedBarData = {{ grouped_bar_charts[block] | safe }};
+                        Plotly.newPlot('grouped-bar-{{ block }}', groupedBarData.data, groupedBarData.layout);
+                    </script>
+                </div>
+                <!-- Biểu đồ mật độ
+                <div id="density-plot-{{ block }}" style="width: 100%; margin-top: 20px;"></div>
                 <script>
-                    var histogramData = {{ histogram_data | safe }};
-                    Plotly.newPlot('histogram-{{ block }}', histogramData.data, histogramData.layout);
+                    var densityPlotData = {{ density_plots[block] | safe }};
+                    Plotly.newPlot('density-plot-{{ block }}', densityPlotData.data, densityPlotData.layout);
+                </script> -->
+                <!-- Biểu đồ thanh ngang -->
+                <div id="horizontal-bar-{{ block }}" style="width: 100%; margin-top: 20px;"></div>
+                <script>
+                    var horizontalBarChartData = {{ horizontal_bar_charts[block] | safe }};
+                    Plotly.newPlot('horizontal-bar-{{ block }}', horizontalBarChartData.data, horizontalBarChartData.layout);
                 </script>
 
-                <!-- Bảng thống kê -->
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Chỉ số</th>
-                            <th>Giá trị</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Điểm trung bình</td>
-                            <td>{{ summary_stats[block].mean }}</td>
-                        </tr>
-                        <tr>
-                            <td>Trung vị</td>
-                            <td>{{ summary_stats[block].median }}</td>
-                        </tr>
-                        <tr>
-                            <td>Số thí sinh đạt điểm dưới 1</td>
-                            <td>{{ summary_stats[block].below_1_count }}</td>
-                        </tr>
-                        <tr>
-                            <td>Số thí sinh đạt điểm dưới trung bình</td>
-                            <td>{{ summary_stats[block].below_avg_count }}</td>
-                        </tr>
-                        <tr>
-                            <td>Mốc điểm trung bình phổ biến nhất</td>
-                            <td>{{ summary_stats[block].mode }}</td>
-                        </tr>
-                        <tr>
-                            <td>Số thí sinh đạt điểm >= 30</td>
-                            <td>{{ summary_stats[block].above_30_count }}</td>
-                        </tr>
-                        <tr>
-                            <td>Số thí sinh đạt điểm < 10</td>
-                            <td>{{ summary_stats[block].below_10_count }}</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         {% endfor %}
     </div>
