@@ -1,4 +1,5 @@
 # DV-ClassPro-FinalProject
+*The Final Project of Data Visualization Course - HCMUS - Nov 2024.*
 ---
 ## Quick Guide
 1. Install kaggle library: `pip install kaggle`.
