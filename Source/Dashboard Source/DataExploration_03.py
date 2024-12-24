@@ -34,26 +34,26 @@ def section_03_01():
         y=correlation_matrix.columns,
         text=np.round(correlation_matrix.values, 2),
         texttemplate='%{text}',
-        textfont={"size": 12, "color": "black"},
+        textfont={"size": 14, "color": "black"},
         hoverongaps=False,
         colorscale='RdBu',
         zmid=0
     ))
 
     heatmap.update_layout(
-        width=900,
-        height=700,
+        width=1030,
+        height=800,
         paper_bgcolor='rgba(255,255,255,1)',
         plot_bgcolor='rgba(255,255,255,1)',
-        font={'color': 'black'},
+        font={'color': 'black', 'size': 14},
         xaxis={'showgrid': False},
         yaxis={'showgrid': False},
         margin=dict(
-            l=50,    
-            r=50,    
-            t=100,   
-            b=50,    
-            pad=4    
+            l=60,
+            r=60,
+            t=100,
+            b=60,
+            pad=4
         ),
         autosize=False
     )
@@ -73,7 +73,66 @@ def section_03_01():
     
     strongest_correlations = sorted(correlations, key=lambda x: abs(x['correlation']), reverse=True)[:10]
     weakest_correlations = sorted(correlations, key=lambda x: abs(x['correlation']))[:10]
+    #--------------------------------------------------------------------------------------------------------#
+    # Calculate total score and launch pad analysis
+    df['total_score'] = df[['Toán', 'Văn', 'Vật Lý', 'Hóa Học', 'Sinh Học', 
+                           'Tiếng Anh', 'Lịch Sử', 'Địa Lý', 'GDCD']].sum(axis=1)
     
-    return heatmap_json, strongest_correlations, weakest_correlations
+    launch_pad_stats = []
+    for subject in df.columns[:-1]:
+        stats = {
+            'subject': subject,
+            'mean_score': df[subject].mean(),
+            'total_correlation': df[subject].corr(df['total_score']),
+            'high_score_count': len(df[df[subject] >= 8])
+        }
+        launch_pad_stats.append(stats)
     
-    return heatmap_json, correlations
+    # Create launch pad visualization
+    launch_pad = go.Figure(data=[
+        go.Scatter(
+            x=[stat['mean_score'] for stat in launch_pad_stats],
+            y=[stat['total_correlation'] for stat in launch_pad_stats],
+            mode='markers+text',
+            text=[stat['subject'] for stat in launch_pad_stats],
+            textposition="top center",
+            marker=dict(
+                size=20,
+                color=[stat['high_score_count'] for stat in launch_pad_stats],
+                colorscale='Viridis',
+                showscale=True,
+                colorbar=dict(title="Số lượng điểm cao (≥8)")
+            )
+        )
+    ])
+    
+    launch_pad.update_layout(
+        xaxis=dict(
+            title="Điểm trung bình môn",
+            showgrid=True,
+            gridwidth=1,
+            gridcolor='rgba(128,128,128,0.2)',
+            zeroline=True,
+            zerolinewidth=1,
+            zerolinecolor='rgba(128,128,128,0.5)'
+        ),
+        yaxis=dict(
+            title="Tương quan với tổng điểm",
+            showgrid=True,
+            gridwidth=1,
+            gridcolor='rgba(128,128,128,0.2)',
+            zeroline=True,
+            zerolinewidth=1,
+            zerolinecolor='rgba(128,128,128,0.5)'
+        ),
+        width=1030,
+        height=700,
+        paper_bgcolor='rgba(255,255,255,1)',
+        plot_bgcolor='rgba(255,255,255,1)',
+        font={'color': 'black'},
+        margin=dict(l=50, r=50, t=80, b=50)
+    )
+    launch_pad_json = json.dumps(launch_pad, cls=plotly.utils.PlotlyJSONEncoder)
+    
+    return heatmap_json, strongest_correlations, weakest_correlations, launch_pad_stats, launch_pad_json
+    

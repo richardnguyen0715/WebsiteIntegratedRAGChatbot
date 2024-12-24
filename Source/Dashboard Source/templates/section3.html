@@ -75,11 +75,37 @@
                 </table>
             </div>
         </div>
+
+        <!-- Row 4: Launch Pad Analysis -->
+        <div style="text-align: center; margin-bottom: 50px;">
+            <h3 style="text-align: center;">Phân tích môn học bệ phóng</h3>
+            <div id="launch-pad-plot"></div>
+            
+            <!-- Launch Pad Stats -->
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h3>Top 3 môn học bệ phóng</h3>
+                <p style="color: white; margin-bottom: 15px;">Các môn học có điểm trung bình và tương quan với tổng điểm cao nhất</p>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 30px; gap: 60px; padding: 0 40px;">
+                {% for stat in launch_pad_stats[:3] %}
+                <div class="widget" style="width: 25%;">
+                    <h3>{{ stat.subject }}</h3>
+                    <p>Điểm trung bình: {{ "%.2f"|format(stat.mean_score) }}</p>
+                    <p>Tương quan tổng điểm: {{ "%.3f"|format(stat.total_correlation) }}</p>
+                    <p>Số lượng điểm cao: {{ stat.high_score_count }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </body>
 
 <script>
     var heatmapData = {{ heatmap | safe }};
     Plotly.newPlot('correlation-heatmap', heatmapData.data, heatmapData.layout);
+
+     
+    var launchPadData = {{ launch_pad | safe }};
+    Plotly.newPlot('launch-pad-plot', launchPadData.data, launchPadData.layout);
 </script>
 {% endblock %}
