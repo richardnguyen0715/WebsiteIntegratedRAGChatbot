@@ -103,7 +103,6 @@
                     var horizontalBarChartData = {{ horizontal_bar_charts[block] | safe }};
                     Plotly.newPlot('horizontal-bar-{{ block }}', horizontalBarChartData.data, horizontalBarChartData.layout);
                 </script>
-
             </div>
         {% endfor %}
     </div>

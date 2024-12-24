@@ -4,7 +4,8 @@
 
 {% block content %}
 <body class="Section-1">
-    <h1>Phần 1: Phân tích thống kê tổng quan về điểm số</h1>
+    <h1>Phần 1</h1>
+    <p>Phân tích thống kê tổng quan về điểm số của kỳ thi THPT_2021.</p>
 </body>
 <!-- Bar Chart: Average Scores by Subject -->
 <!-- Row 1: Average Scores by Subject and Subject Coverage -->
@@ -21,7 +22,7 @@
 
     <!-- Hình 2: Subject Coverage (Data Availability) -->
     <div style="width: 48%;">
-        <h3>Số lượng học sinh tham gia thi mỗi môn</h3>
+        <h3>Tỉ lệ học sinh tham gia thi mỗi môn</h3>
         <div id="pie-chart"></div>
         <script>
             var pieChartData = {{ pie_chart | safe }};
@@ -63,16 +64,20 @@
                             <td>{{ summary_stats[subject].median }}</td>
                         </tr>
                         <tr>
-                            <td>Số thí sinh đạt điểm dưới 1</td>
-                            <td>{{ summary_stats[subject].below_1_count }}</td>
+                            <td>Tỷ lệ số thí sinh đạt điểm <= 1</td>
+                            <td>{{ summary_stats[subject].below_1_count }} %</td>
                         </tr>
                         <tr>
-                            <td>Số thí sinh đạt điểm dưới trung bình</td>
-                            <td>{{ summary_stats[subject].below_avg_count }}</td>
+                            <td>Tỷ lệ số thí sinh đạt điểm dưới trung bình</td>
+                            <td>{{ summary_stats[subject].below_avg_count }} %</td>
                         </tr>
                         <tr>
                             <td>Mốc điểm trung bình phổ biến nhất</td>
                             <td>{{ summary_stats[subject].mode }}</td>
+                        </tr>
+                        <tr>
+                            <td>Độ lệch chuẩn</td>
+                            <td>{{ summary_stats[subject].std }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -80,5 +85,14 @@
         {% endfor %}
     </div>
 </div>
-
+<!-- Row 3: Phân bố điểm thi các môn (Box plots) -->
+ <!-- Row 3: Phân bố điểm thi các môn (Box plots) -->
+<div>
+    <h3>Phân bố điểm số các môn học</h3>
+    <div id="boxplot-chart" style="margin-bottom: 50px;"></div>
+    <script>
+        var boxplotChartData = {{ boxplot_chart | safe }};
+        Plotly.newPlot('boxplot-chart', boxplotChartData.data, boxplotChartData.layout);
+    </script>
+</div>
 {% endblock %}

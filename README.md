@@ -44,7 +44,7 @@
    5.2 `Source\DataExploration\DataExploration_02.ipynb`\
    5.3 `Source\DataExploration\DataExploration_03.ipynb`
 7. Run Dashboard.\
-   6.1 `Source\DashboardSource\main.py`
+   6.1 `Source\DashboardSource\app.py`
 
 ## Repository Introducing:
 

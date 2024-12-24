@@ -67,11 +67,16 @@ def section_02_01():
         
         # Tính các thống kê
         mean_score = scores.mean()
-        below_1_count = len(scores[scores <= 1])
+        mean_score = round(mean_score, 3)
+        below_1_count = len(scores[scores <= 1])/len(scores)*100
+        below_1_count = round(below_1_count, 3)
         median_score = scores.median()
-        below_avg_count = len(scores[scores < mean_score])
+        median_score = round(median_score, 3)
+        below_avg_count = len(scores[scores < mean_score])/len(scores)*100
+        below_avg_count = round(below_avg_count, 3)
         mode_score = scores.mode()[0] if not scores.mode().empty else None  # Mốc điểm trung bình phổ biến nhất
-        above_30_count = len(scores[scores >= 30])
+        mode_score = round(mode_score, 3) if mode_score is not None else None
+        above_30_count = len(scores[scores >= 29])
         below_10_count = len(scores[scores < 10])
 
         # Lưu thông tin thống kê vào summary_stats
@@ -81,7 +86,7 @@ def section_02_01():
             'below_1_count': below_1_count,
             'below_avg_count': below_avg_count,
             'mode': mode_score,
-            'above_30_count': above_30_count,
+            'above_29_count': above_30_count,
             'below_10_count': below_10_count
         }
 
