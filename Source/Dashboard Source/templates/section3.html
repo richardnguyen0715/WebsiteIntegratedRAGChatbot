@@ -3,6 +3,83 @@
 {% block title %}Section 3{% endblock %}
 
 {% block content %}
-<h1>Section 3 Charts</h1>
-<p>This section contains settings and configurations.</p>
+<body class="Section-3">
+    <div class="main-content">
+        <h1>Phân tích tương quan giữa các môn học</h1>
+        
+        <!-- Row 1: Summary Widgets -->
+        <div style="display: flex; justify-content: space-around; margin-bottom: 50px; gap: 40px;">
+            <div class="widget" style="width: 40%;">
+                <h3>Tương quan mạnh nhất</h3>
+                <p>{{ strongest_correlations[0].subject1 }} - {{ strongest_correlations[0].subject2 }}</p>
+                <p>{{ "%.3f"|format(strongest_correlations[0].correlation) }}</p>
+            </div>
+            <div class="widget" style="width: 40%;">
+                <h3>Tương quan yếu nhất</h3>
+                <p>{{ weakest_correlations[0].subject1 }} - {{ weakest_correlations[0].subject2 }}</p>
+                <p>{{ "%.3f"|format(weakest_correlations[0].correlation) }}</p>
+            </div>
+        </div>
+
+        <!-- Row 2: Heatmap -->
+        <div style="text-align: center; margin-bottom: 50px;">
+            <h3 style="text-align: center;">Ma trận tương quan</h3>
+            <div id="correlation-heatmap"></div>
+        </div>
+
+        <!-- Row 3: Tables -->
+        <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+            <!-- Strongest Correlations -->
+            <div style="width: 48%;">
+                <h3>Top 10 cặp môn học có tương quan mạnh nhất</h3>
+                <table class="correlation-table">
+                    <thead>
+                        <tr>
+                            <th>Môn 1</th>
+                            <th>Môn 2</th>
+                            <th>Hệ số tương quan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for corr in strongest_correlations %}
+                        <tr>
+                            <td>{{ corr.subject1 }}</td>
+                            <td>{{ corr.subject2 }}</td>
+                            <td>{{ "%.3f"|format(corr.correlation) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Weakest Correlations -->
+            <div style="width: 48%;">
+                <h3>Top 10 cặp môn học có tương quan yếu nhất</h3>
+                <table class="correlation-table">
+                    <thead>
+                        <tr>
+                            <th>Môn 1</th>
+                            <th>Môn 2</th>
+                            <th>Hệ số tương quan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for corr in weakest_correlations %}
+                        <tr>
+                            <td>{{ corr.subject1 }}</td>
+                            <td>{{ corr.subject2 }}</td>
+                            <td>{{ "%.3f"|format(corr.correlation) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var heatmapData = {{ heatmap | safe }};
+    Plotly.newPlot('correlation-heatmap', heatmapData.data, heatmapData.layout);
+</script>
 {% endblock %}

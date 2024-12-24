@@ -412,14 +412,14 @@ body.Section-1 {
     background-color: #1c96ca;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Đổ bóng */
+  
 }
 /*thêm màu nền cho section-2 */
 body.Section-2 {
     background-color: #1c96ca;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Đổ bóng */
+    
 }
 /* chỉnh chữ cho section-1 vô trung tâm */
 .Section-1 h1 {
@@ -436,3 +436,50 @@ body.Section-2 {
     margin-bottom: 20px;
 }
 /* tạo khoảng cách giữa dòng phần bố điểm  các môn với 2 hình ở trên to lên 1 xíu, ý tôi là tạo khoảng cách giữa row 2 với ảnh của row 1 á */
+/* ...existing code... */
+
+/* Add background color for section-3 */
+/* Update Section-3 styling */
+body.Section-3 {
+    background-color: #1c96ca;
+    padding: 20px;
+    border-radius: 10px;
+    min-height: 100vh;
+}
+.Section-3 .main-content {
+    margin-left: 60px;
+    margin-right: 20px;
+    padding: 20px;
+}
+/* Center heading for section-3 */
+.Section-3 h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.Section-3 h3 {
+    text-align: center;
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+/* Update correlation table styling for section-3 */
+.correlation-table {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.correlation-table th {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    padding: 15px;
+}
+
+.correlation-table td {
+    color: #ffffff;
+    padding: 12px;
+}

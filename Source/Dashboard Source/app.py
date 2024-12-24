@@ -85,8 +85,12 @@ def section2():
                            
 @app.route('/section3')
 def section3():
-    return render_template('section3.html')
-
+    heatmap_json, strongest_correlations, weakest_correlations = section_03_01()
+    return render_template('section3.html', 
+                         heatmap=heatmap_json,
+                         strongest_correlations=strongest_correlations,
+                         weakest_correlations=weakest_correlations)
+                         
 @app.route('/chat', methods=['POST'])
 def chat():
     user_message = request.json.get("message")
