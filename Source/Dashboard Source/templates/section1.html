@@ -5,7 +5,7 @@
 {% block content %}
 <body class="Section-1">
     <h1>Phần 1</h1>
-    <p>Phân tích thống kê tổng quan về điểm số của kì thi THPT_2021.</p>
+    <p>Phân tích thống kê tổng quan về điểm số của kỳ thi THPT_2021.</p>
 </body>
 <!-- Bar Chart: Average Scores by Subject -->
 <!-- Row 1: Average Scores by Subject and Subject Coverage -->
@@ -64,12 +64,12 @@
                             <td>{{ summary_stats[subject].median }}</td>
                         </tr>
                         <tr>
-                            <td>Số thí sinh đạt điểm dưới 1</td>
-                            <td>{{ summary_stats[subject].below_1_count }}</td>
+                            <td>Tỷ lệ số thí sinh đạt điểm <= 1</td>
+                            <td>{{ summary_stats[subject].below_1_count }} %</td>
                         </tr>
                         <tr>
-                            <td>Số thí sinh đạt điểm dưới trung bình</td>
-                            <td>{{ summary_stats[subject].below_avg_count }}</td>
+                            <td>Tỷ lệ số thí sinh đạt điểm dưới trung bình</td>
+                            <td>{{ summary_stats[subject].below_avg_count }} %</td>
                         </tr>
                         <tr>
                             <td>Mốc điểm trung bình phổ biến nhất</td>
