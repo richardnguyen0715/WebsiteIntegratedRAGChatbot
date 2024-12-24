@@ -25,6 +25,37 @@
         <div style="text-align: center; margin-bottom: 50px;">
             <h3 style="text-align: center;">Ma trận tương quan</h3>
             <div id="correlation-heatmap"></div>
+
+             <!-- Correlation Matrix Explanation -->
+             <div style="text-align: left; margin-top: 20px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                <h4 style="color: white; margin-bottom: 10px;">Nhận xét:</h4>
+                <ul style="color: white; list-style-type: disc; margin-left: 20px;">
+                    <li><strong>Mức độ tương quan mạnh giữa các môn KHXH:</strong>
+                        <ul style="margin-top: 5px; margin-left: 20px;">
+                            <li>Các môn Lịch sử, Địa lý, và GDCD có hệ số tương quan cao</li>
+                            <li>Học sinh đạt điểm cao một môn thường có xu hướng đạt điểm cao ở các môn còn lại</li>
+                        </ul>
+                    </li>
+                    <li><strong>Tương quan vừa phải giữa Toán, Văn, và Tiếng Anh:</strong>
+                        <ul style="margin-top: 5px; margin-left: 20px;">
+                            <li>Toán và Tiếng Anh có tương quan khá mạnh</li>
+                            <li>Văn có tương quan cao hơn với Tiếng Anh và các môn KHXH</li>
+                        </ul>
+                    </li>
+                    <li><strong>Mức độ tương quan thấp giữa các môn KHTN và KHXH:</strong>
+                        <ul style="margin-top: 5px; margin-left: 20px;">
+                            <li>Các môn KHTN (Vật lý, Hóa học, Sinh học) có ít tương quan với các môn KHXH</li>
+                            <li>Phản ánh sự khác biệt về lĩnh vực kiến thức</li>
+                        </ul>
+                    </li>
+                    <li><strong>GDCD là môn nổi bật trong nhóm KHXH:</strong>
+                        <ul style="margin-top: 5px; margin-left: 20px;">
+                            <li>GDCD thể hiện sự liên kết mạnh với Địa lý và Lịch sử</li>
+                            <li>Có ảnh hưởng lớn đến tổng điểm</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <!-- Row 3: Tables -->
@@ -80,7 +111,36 @@
         <div style="text-align: center; margin-bottom: 50px;">
             <h3 style="text-align: center;">Phân tích môn học bệ phóng</h3>
             <div id="launch-pad-plot"></div>
-            
+            <!-- Launch Pad Analysis Explanation -->
+            <div style="text-align: left; margin-top: 20px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                <h4 style="color: white; margin-bottom: 10px;">Nhận xét:</h4>
+                <ul style="color: white; list-style-type: disc; margin-left: 20px;">
+                    <li><strong>Môn GDCD nổi bật nhất:</strong>
+                        <ul style="margin-top: 5px; margin-left: 20px;">
+                            <li>Điểm trung bình cao nhất (gần 8) và tương quan mạnh nhất với tổng điểm (r≈0.72)</li>
+                            <li>Số lượng điểm cao lớn nhất trong tất cả các môn</li>
+                        </ul>
+                    </li>
+                    <li><strong>Các môn có mức ảnh hưởng cao:</strong>
+                        <ul style="margin-top: 5px; margin-left: 20px;">
+                            <li>Toán và Văn: Tương quan cao với tổng điểm (r≈0.66), điểm trung bình khá (6-6.5)</li>
+                            <li>Tiếng Anh: Tương quan khá (r≈0.63) nhưng điểm trung bình thấp hơn (gần 6)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Các môn KHXH (Lịch sử, Địa lý):</strong>
+                        <ul style="margin-top: 5px; margin-left: 20px;">
+                            <li>Tương quan tốt với tổng điểm (r≈0.6)</li>
+                            <li>Điểm trung bình ổn định trong khoảng 6-6.5</li>
+                        </ul>
+                    </li>
+                    <li><strong>Các môn KHTN (Hóa học, Sinh học, Vật lý):</strong>
+                        <ul style="margin-top: 5px; margin-left: 20px;">
+                            <li>Tương quan thấp hơn với tổng điểm, đặc biệt là Sinh học (r≈0.55)</li>
+                            <li>Điểm trung bình dao động trong khoảng 5-7</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
             <!-- Launch Pad Stats -->
             <div style="text-align: center; margin-bottom: 20px;">
                 <h3>Top 3 môn học bệ phóng</h3>
