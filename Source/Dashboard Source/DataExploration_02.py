@@ -76,7 +76,7 @@ def section_02_01():
         below_avg_count = round(below_avg_count, 3)
         mode_score = scores.mode()[0] if not scores.mode().empty else None  # Mốc điểm trung bình phổ biến nhất
         mode_score = round(mode_score, 3) if mode_score is not None else None
-        above_30_count = len(scores[scores >= 29])
+        above_29_count = len(scores[scores >= 29])
         below_10_count = len(scores[scores < 10])
 
         # Lưu thông tin thống kê vào summary_stats
@@ -86,7 +86,7 @@ def section_02_01():
             'below_1_count': below_1_count,
             'below_avg_count': below_avg_count,
             'mode': mode_score,
-            'above_29_count': above_30_count,
+            'above_29_count': above_29_count,
             'below_10_count': below_10_count
         }
 
