@@ -5,12 +5,12 @@
 {% block content %}
 <body class="Section-3">
         <h1 style="justify-self: center; text-transform: uppercase;">Phần 3</h1>
-        <p>Phân tích tương quan giữa các môn học.</p>
+        <p style="margin-left: 20px;">Phân tích xu hướng, tương quan và dự đoán hiệu suất môn học. </p>
         
         <div style="display: flex; flex-direction: row; gap: 20px; margin-bottom: 50px; justify-content: center;">
             <!-- Row 2: Heatmap -->
             <div style="width: 65%;">
-                <h3>Ma trận tương quan</h3>
+                <h3 style="text-align: left;">Ma trận tương quan giữa các môn học</h3>
                 <div id="correlation-heatmap"></div>
             </div>
             <!-- Row 1: Summary Widgets -->
@@ -80,12 +80,8 @@
         <!-- Row 4: Launch Pad Analysis -->
         <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 50px;">
             <div style="width: 60%;">
-                <h3>Phân tích môn học bệ phóng</h3>
+                <h3 style="text-align: left;">Phân tích những môn học bệ phóng</h3>
                 <div id="pad-plot" style="width: 100%; height: 500px;"></div>
-                <script>
-                    var launchPadData = {{ launch_pad | safe }};
-                    Plotly.newPlot('pad-plot', launchPadData.data, launchPadData.layout);
-                </script>
             </div>
             <!-- Launch Pad Analysis Explanation
             <div style="text-align: left; margin-top: 20px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 8px;">
@@ -165,12 +161,47 @@
                 </ul>
             </div>
         </div> -->
+        <h3 style="text-align: left;">Đóng góp của các môn KHTN đến kết quả tổ hợp thi Tự nhiên</h3>
+       
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 50px;">
+            <div style="width: 48%;">
+                <div id="bar-chart"></div>
+            </div>
+            <div style="width: 48%;">
+                <div id="radar-chart" style="margin-bottom: 30px;"></div>
+            </div>
+        </div>
 
+        <h3 style="text-align: left;">Đóng góp của các môn KHXH đến kết quả tổ hợp thi Xã hội</h3>
+       
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 50px;">
+            <div style="width: 48%;">
+                <div id="bar-chart-social-sciences"></div>
+            </div>
+            <div style="width: 48%;">
+                <div id="radar-chart-social-sciences" style="margin-bottom: 30px;"></div>
+            </div>
+        </div>
 </body>
 
 <script>
     var heatmapData = {{ heatmap | safe }};
     Plotly.newPlot('correlation-heatmap', heatmapData.data, heatmapData.layout);
+
+    var radarChartData = {{ radar_chart | safe }};
+    Plotly.newPlot('radar-chart', radarChartData.data, radarChartData.layout);
+
+    var launchPadData = {{ launch_pad | safe }};
+    Plotly.newPlot('pad-plot', launchPadData.data, launchPadData.layout);
+
+    var barChartData = {{ bar_chart | safe }};
+    Plotly.newPlot('bar-chart', barChartData.data, barChartData.layout);
+
+    var radarChartSocialSciencesData = {{ radar_chart_social_sciences | safe }};
+    Plotly.newPlot('radar-chart-social-sciences', radarChartSocialSciencesData.data, radarChartSocialSciencesData.layout);
+
+    var barChartSocialSciencesData = {{ bar_chart_social_sciences | safe }};
+    Plotly.newPlot('bar-chart-social-sciences', barChartSocialSciencesData.data, barChartSocialSciencesData.layout);
 </script>
      
 
