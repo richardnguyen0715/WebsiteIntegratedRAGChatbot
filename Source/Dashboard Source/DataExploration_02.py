@@ -126,3 +126,189 @@ def section_02_01():
 
     # Trả về histogram và thông tin thống kê
     return histogram_charts, summary_stats
+
+def section_02_02(df):
+    avg_scores = {}
+    for block, subjects in subjects_for_blocks.items():
+        avg_scores[block] = df[subjects].mean()
+
+    grouped_bar_charts = {}
+    for block, subjects in subjects_for_blocks.items():
+        grouped_bar_chart = go.Figure()
+        grouped_bar_chart.add_trace(go.Bar(
+            x=subjects,
+            y=avg_scores[block].values,
+            name=block,
+            marker=dict(color='rgba(0, 158, 115, 0.8)')
+        ))
+        grouped_bar_chart.update_layout(
+            barmode='group',
+            title=f'Biểu đồ cột thể hiện sự chênh lệch điểm của khối {block}',
+            xaxis_title='Môn học',
+            yaxis_title='Điểm trung bình',
+            yaxis=dict(range=[0, 10])
+        )
+        grouped_bar_charts[block] = json.dumps(grouped_bar_chart, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return grouped_bar_charts
+
+def section_02_03(df):
+    density_plots = {}
+    colors = ['rgba(0, 114, 178, 0.8)', 'rgba(213, 94, 0, 0.8)', 'rgba(0, 158, 115, 0.8)']
+    for block, subjects in subjects_for_blocks.items():
+        density_plot = go.Figure()
+        colors = ['blue', 'green', 'red']
+
+        for subject, color in zip(subjects, colors):
+            density_plot.add_trace(go.Violin(
+                x=df[subject],
+                line_color=color,
+                name=subject,
+                box_visible=True,
+                meanline_visible=True
+            ))
+
+        density_plot.update_layout(
+            title=f'Density Plot for Block {block}',
+            xaxis_title='Điểm số',
+            yaxis_title='Mật độ',
+            violingap=0,
+            violingroupgap=0,
+            violinmode='overlay'
+        )
+
+        density_plots[block] = json.dumps(density_plot, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return density_plots
+
+# filepath: /d:/SINHVIEN/1.study/hk1_nam3/TrucQuanHoaDL/projects/DV-ClassPro-FinalProject/Source/Dashboard Source/DataExploration_02.py
+def section_02_04(df):
+    pie_charts = {}
+    colors = ['rgba(0, 114, 178, 0.8)', 'rgba(213, 94, 0, 0.8)', 'rgba(0, 158, 115, 0.8)']
+    for block, subjects in subjects_for_blocks.items():
+        scores = df[block]
+        below_15 = len(scores[scores < 15])
+        between_15_23 = len(scores[(scores >= 15) & (scores <= 23)])
+        above_23 = len(scores[scores > 23])
+
+        labels = ['< 15 điểm', '15-23 điểm', '> 23 điểm']
+        values = [below_15, between_15_23, above_23]
+
+        pie_chart = go.Figure(data=[go.Pie(labels=labels, values=values, textinfo='label', marker=dict(colors=colors))])
+        pie_chart.update_layout(
+            title=f'Phân bố điểm thi của các học sinh dựa theo các nhóm điểm của khối {block}',
+        )
+
+        pie_charts[block] = json.dumps(pie_chart, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return pie_charts
+
+def section_02_05(df):
+    horizontal_bar_charts = {}
+    colors = {
+        '< 15 điểm': 'rgba(0, 114, 178, 0.8)',  # Blue
+        '15-23 điểm': 'rgba(230, 159, 0, 0.8)',  # Orange
+        '> 23 điểm': 'rgba(86, 180, 233, 0.8)'  # Sky Blue
+    }
+    for block, subjects in subjects_for_blocks.items():
+        scores = df[subjects]
+        groups = {
+            '< 15 điểm': df[df[block] < 15][subjects],
+            '15-23 điểm': df[(df[block] >= 15) & (df[block] <= 23)][subjects],
+            '> 23 điểm': df[df[block] > 23][subjects]
+        }
+
+        horizontal_bar_chart = go.Figure()
+        for group_name, group_scores in groups.items():
+            avg_scores = group_scores.mean()
+            horizontal_bar_chart.add_trace(go.Bar(
+                x=avg_scores,
+                y=subjects,
+                orientation='h',
+                name=group_name, 
+                marker=dict(color=colors[group_name])
+            ))
+
+        horizontal_bar_chart.update_layout(
+            title=f'Điểm trung bình của các môn theo nhóm điểm của khối {block}',
+            xaxis_title='Điểm trung bình',
+            yaxis_title='Môn học',
+            xaxis=dict(range=[0, 10])
+        )
+
+        horizontal_bar_charts[block] = json.dumps(horizontal_bar_chart, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return horizontal_bar_charts
+
+def section_02_06(df):
+    natural_subjects = ['Toán', 'Vật Lý', 'Hóa Học', 'Sinh Học']
+    social_subjects = ['Văn', 'Lịch Sử', 'Địa Lý', 'GDCD']
+
+    df['avg_natural'] = df[natural_subjects].mean(axis=1)
+    df['avg_social'] = df[social_subjects].mean(axis=1)
+
+    natural_group = df[df['avg_natural'] > df['avg_social'] + 1]
+    social_group = df[df['avg_social'] > df['avg_natural'] + 1]
+    balanced_group = df[(df['avg_natural'] <= df['avg_social'] + 1) & (df['avg_social'] <= df['avg_natural'] + 1)]
+
+    labels = ['Thiên về tự nhiên', 'Thiên về xã hội', 'Cân bằng']
+    values = [len(natural_group), len(social_group), len(balanced_group)]
+
+    colors = ['rgba(0, 114, 178, 0.8)', 'rgba(213, 94, 0, 0.8)', 'rgba(0, 158, 115, 0.8)'] 
+
+    donut_chart = go.Figure(data=[go.Pie(
+        labels=labels,
+        values=values,
+        hole=0.4,  # Tạo lỗ trống ở giữa để thành biểu đồ donut
+        textinfo='percent', 
+        marker=dict(colors=colors)
+    )])
+    donut_chart.update_layout(
+        title='Phân loại học sinh theo thiên hướng học tập'
+    )
+
+    return json.dumps(donut_chart, cls=plotly.utils.PlotlyJSONEncoder)
+
+def section_02_07(df):
+    natural_subjects = ['Toán', 'Vật Lý', 'Hóa Học', 'Sinh Học']
+    social_subjects = ['Văn', 'Lịch Sử', 'Địa Lý', 'GDCD']
+
+    df['avg_natural'] = df[natural_subjects].mean(axis=1)
+    df['avg_social'] = df[social_subjects].mean(axis=1)
+
+    natural_group = df[df['avg_natural'] > df['avg_social'] + 1]
+    social_group = df[df['avg_social'] > df['avg_natural'] + 1]
+    balanced_group = df[(df['avg_natural'] <= df['avg_social'] + 1) & (df['avg_social'] <= df['avg_natural'] + 1)]
+
+    blocks = ['A00', 'A01', 'B00', 'C00', 'D00']
+    group_labels = ['Thiên về tự nhiên', 'Thiên về xã hội', 'Cân bằng']
+    group_data = {
+        'Thiên về tự nhiên': [],
+        'Thiên về xã hội': [],
+        'Cân bằng': []
+    }
+
+    for block in blocks:
+        group_data['Thiên về tự nhiên'].append(len(natural_group[natural_group[block].notna()]))
+        group_data['Thiên về xã hội'].append(len(social_group[social_group[block].notna()]))
+        group_data['Cân bằng'].append(len(balanced_group[balanced_group[block].notna()]))
+
+    stacked_bar_chart = go.Figure()
+    colors = ['rgba(0, 114, 178, 0.8)', 'rgba(213, 94, 0, 0.8)', 'rgba(0, 158, 115, 0.8)']  # Blue, Vermillion, Green
+
+    for group_name, color in zip(group_labels, colors):
+        stacked_bar_chart.add_trace(go.Bar(
+            x=blocks,
+            y=group_data[group_name],
+            name=group_name,
+            marker=dict(color=color)
+        ))
+
+    stacked_bar_chart.update_layout(
+        title='Tỷ lệ học sinh thuộc từng nhóm thiên hướng trong các khối thi',
+        xaxis_title='Khối thi',
+        yaxis_title='Số lượng học sinh',
+        barmode='stack'
+    )
+
+    return json.dumps(stacked_bar_chart, cls=plotly.utils.PlotlyJSONEncoder)
