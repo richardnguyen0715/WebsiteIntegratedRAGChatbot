@@ -70,13 +70,13 @@ def section_03_01():
         texttemplate='%{text}',
         textfont={"size": 14, "color": "black"},
         hoverongaps=False,
-        colorscale='RdBu',
+        colorscale='Magma',  # Colorblind-friendly colorscale
         zmid=0
     ))
 
     heatmap.update_layout(
-        width=1030,
-        height=800,
+        width=800,
+        height=600,
         paper_bgcolor='rgba(255,255,255,1)',
         plot_bgcolor='rgba(255,255,255,1)',
         font={'color': 'black', 'size': 14},
@@ -133,7 +133,7 @@ def section_03_01():
             marker=dict(
                 size=20,
                 color=[stat['high_score_count'] for stat in launch_pad_stats],
-                colorscale='Viridis',
+                colorscale='Viridis',  # Colorblind-friendly colorscale
                 showscale=True,
                 colorbar=dict(title="Số lượng điểm cao (≥8)")
             )
@@ -159,7 +159,7 @@ def section_03_01():
             zerolinewidth=1,
             zerolinecolor='rgba(128,128,128,0.5)'
         ),
-        width=1030,
+        width=800,
         height=700,
         paper_bgcolor='rgba(255,255,255,1)',
         plot_bgcolor='rgba(255,255,255,1)',
