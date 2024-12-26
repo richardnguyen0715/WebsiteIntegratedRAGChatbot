@@ -103,7 +103,7 @@ def section_01_01():
         below_1_count = round(below_1_count, 3)
         median_score = scores.median()
         median_score = round(median_score, 3)
-        below_avg_count = len(scores[scores < mean_score])/len(scores) * 100
+        below_avg_count = len(scores[scores < 5])/len(scores) * 100
         below_avg_count = round(below_avg_count, 3)
         mode_score = scores.mode()[0] if not scores.mode().empty else None  # Mốc điểm trung bình phổ biến nhất
         mode_score = round(mode_score, 3) if mode_score is not None else None
