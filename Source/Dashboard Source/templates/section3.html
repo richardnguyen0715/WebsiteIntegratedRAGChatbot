@@ -5,25 +5,27 @@
 {% block content %}
 <body class="Section-3">
         <h1 style="justify-self: center; text-transform: uppercase;">Phần 3</h1>
-        <p>Phân tích tương quan giữa các môn học.</p>
-        <!-- Row 1: Summary Widgets -->
-        <div style="display: flex; justify-content: space-around; margin-bottom: 50px; gap: 40px;">
-            <div class="widget" style="width: 40%;">
-                <h3>Tương quan mạnh nhất</h3>
-                <p>{{ strongest_correlations[0].subject1 }} - {{ strongest_correlations[0].subject2 }}</p>
-                <p>{{ "%.3f"|format(strongest_correlations[0].correlation) }}</p>
+        <p style="margin-left: 20px;">Phân tích xu hướng, tương quan và dự đoán hiệu suất môn học. </p>
+        
+        <div style="display: flex; flex-direction: row; gap: 20px; margin-bottom: 50px; justify-content: center;">
+            <!-- Row 2: Heatmap -->
+            <div style="width: 65%;">
+                <h3 style="text-align: left;">Ma trận tương quan giữa các môn học</h3>
+                <div id="correlation-heatmap"></div>
             </div>
-            <div class="widget" style="width: 40%;">
-                <h3>Tương quan yếu nhất</h3>
-                <p>{{ weakest_correlations[0].subject1 }} - {{ weakest_correlations[0].subject2 }}</p>
-                <p>{{ "%.3f"|format(weakest_correlations[0].correlation) }}</p>
+            <!-- Row 1: Summary Widgets -->
+            <div style="display: flex; flex-direction: column; gap: 20px; width: 30%; height: 30%; margin-top: 150px;">
+                <div class="base" style="font-size: 18px; background-color: #0e4c66; border-radius: 20px; padding: 20px; text-align: center;">
+                    <p><strong>Tương quan mạnh nhất</strong></p>
+                    <p>{{ strongest_correlations[0].subject1 }} - {{ strongest_correlations[0].subject2 }}</p>
+                    <p>{{ "%.3f"|format(strongest_correlations[0].correlation) }}</p>
+                </div>
+                <div class="base" style="font-size: 18px; background-color: #0e4c66; border-radius: 20px; padding: 20px; text-align: center;">
+                    <p><strong>Tương quan yếu nhất</strong></p>
+                    <p>{{ weakest_correlations[0].subject1 }} - {{ weakest_correlations[0].subject2 }}</p>
+                    <p>{{ "%.3f"|format(weakest_correlations[0].correlation) }}</p>
+                </div>
             </div>
-        </div>
-
-        <!-- Row 2: Heatmap -->
-        <div style="text-align: center; margin-bottom: 50px;">
-            <h3 style="text-align: center;">Ma trận tương quan</h3>
-            <div id="correlation-heatmap"></div>
         </div>
 
         <!-- Row 3: Tables -->
@@ -31,7 +33,7 @@
             <!-- Strongest Correlations -->
             <div style="width: 48%;">
                 <h3>Top 10 cặp môn học có tương quan mạnh nhất</h3>
-                <table class="correlation-table">
+                <table class="correlation-table" style="justify-self: center;">
                     <thead>
                         <tr>
                             <th>Môn 1</th>
@@ -54,7 +56,7 @@
             <!-- Weakest Correlations -->
             <div style="width: 48%;">
                 <h3>Top 10 cặp môn học có tương quan yếu nhất</h3>
-                <table class="correlation-table">
+                <table class="correlation-table" style="justify-self: center;">
                     <thead>
                         <tr>
                             <th>Môn 1</th>
@@ -76,10 +78,12 @@
         </div>
 
         <!-- Row 4: Launch Pad Analysis -->
-        <div style="text-align: center; margin-bottom: 50px;">
-            <h3 style="text-align: center;">Phân tích môn học bệ phóng</h3>
-            <div id="launch-pad-plot"></div>
-            <!-- Launch Pad Analysis Explanation -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 50px;">
+            <div style="width: 60%;">
+                <h3 style="text-align: left;">Phân tích những môn học bệ phóng</h3>
+                <div id="pad-plot" style="width: 100%; height: 500px;"></div>
+            </div>
+            <!-- Launch Pad Analysis Explanation
             <div style="text-align: left; margin-top: 20px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 8px;">
                 <h4 style="color: white; margin-bottom: 10px;">Nhận xét:</h4>
                 <ul style="color: white; list-style-type: disc; margin-left: 20px;">
@@ -108,24 +112,24 @@
                         </ul>
                     </li>
                 </ul>
-            </div>
+            </div> -->
             <!-- Launch Pad Stats -->
-            <div style="text-align: center; margin-bottom: 20px;">
+            <div style="display: flex; flex-direction: column;">
                 <h3>Top 3 môn học bệ phóng</h3>
-                <p style="color: white; margin-bottom: 15px;">Các môn học có điểm trung bình và tương quan với tổng điểm cao nhất</p>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-top: 30px; gap: 60px; padding: 0 40px;">
-                {% for stat in launch_pad_stats[:3] %}
-                <div class="widget" style="width: 25%;">
-                    <h3>{{ stat.subject }}</h3>
-                    <p>Điểm trung bình: {{ "%.2f"|format(stat.mean_score) }}</p>
-                    <p>Tương quan tổng điểm: {{ "%.3f"|format(stat.total_correlation) }}</p>
-                    <p>Số lượng điểm cao: {{ stat.high_score_count }}</p>
+                <p style="color: white">Các môn học có điểm trung bình và tương quan với tổng điểm cao nhất</p>
+                <div>
+                    {% for stat in launch_pad_stats[:3] %}
+                    <div class="base" style="justify-self: center; width: 300px; background-color: #0e4c66; border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 20px;"  >
+                        <h3 style="font-size: 16px;">{{ stat.subject }}</h3>
+                        <p style="font-size: 16px;">Điểm trung bình: {{ "%.2f"|format(stat.mean_score) }}</p>
+                        <p style="font-size: 16px;">Tương quan tổng điểm: {{ "%.3f"|format(stat.total_correlation) }}</p>
+                        <p style="font-size: 16px;">Số lượng điểm cao: {{ stat.high_score_count }}</p>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
-        <div style="text-align: center; margin-bottom: 50px;">
+        <!-- <div style="text-align: center; margin-bottom: 50px;">
             <h3 style="text-align: center;">Dự đoán xu hướng điểm cao</h3>
             <div style="text-align: left; margin-top: 20px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 8px;">
                 <h4 style="color: white; margin-bottom: 10px;">Đặc điểm học sinh đạt điểm cao:</h4>
@@ -156,16 +160,49 @@
                     </li>
                 </ul>
             </div>
+        </div> -->
+        <h3 style="text-align: left;">Đóng góp của các môn KHTN đến kết quả tổ hợp thi Tự nhiên</h3>
+       
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 50px;">
+            <div style="width: 48%;">
+                <div id="bar-chart"></div>
+            </div>
+            <div style="width: 48%;">
+                <div id="radar-chart" style="margin-bottom: 30px;"></div>
+            </div>
         </div>
 
+        <h3 style="text-align: left;">Đóng góp của các môn KHXH đến kết quả tổ hợp thi Xã hội</h3>
+       
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 50px;">
+            <div style="width: 48%;">
+                <div id="bar-chart-social-sciences"></div>
+            </div>
+            <div style="width: 48%;">
+                <div id="radar-chart-social-sciences" style="margin-bottom: 30px;"></div>
+            </div>
+        </div>
 </body>
 
 <script>
     var heatmapData = {{ heatmap | safe }};
     Plotly.newPlot('correlation-heatmap', heatmapData.data, heatmapData.layout);
 
-     
+    var radarChartData = {{ radar_chart | safe }};
+    Plotly.newPlot('radar-chart', radarChartData.data, radarChartData.layout);
+
     var launchPadData = {{ launch_pad | safe }};
-    Plotly.newPlot('launch-pad-plot', launchPadData.data, launchPadData.layout);
+    Plotly.newPlot('pad-plot', launchPadData.data, launchPadData.layout);
+
+    var barChartData = {{ bar_chart | safe }};
+    Plotly.newPlot('bar-chart', barChartData.data, barChartData.layout);
+
+    var radarChartSocialSciencesData = {{ radar_chart_social_sciences | safe }};
+    Plotly.newPlot('radar-chart-social-sciences', radarChartSocialSciencesData.data, radarChartSocialSciencesData.layout);
+
+    var barChartSocialSciencesData = {{ bar_chart_social_sciences | safe }};
+    Plotly.newPlot('bar-chart-social-sciences', barChartSocialSciencesData.data, barChartSocialSciencesData.layout);
 </script>
+     
+
 {% endblock %}

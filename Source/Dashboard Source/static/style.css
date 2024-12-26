@@ -6,7 +6,7 @@ body {
     margin: 0;
 }
 body.home-page {
-    background-image: url('/static/background_01.jpg');
+    background-image: url('/static/background_08.webp');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -14,14 +14,14 @@ body.home-page {
 body.home-page h1 {
     text-align: center; /* Căn giữa theo chiều ngang */
     font-weight: bold; /* Làm chữ đậm */
-    color: #ebeaf1; /* Màu chữ trắng */
+    color: #ffffff; /* Màu chữ trắng */
     margin: 0; /* Loại bỏ khoảng cách mặc định */
     position: absolute; /* Đặt vị trí tuyệt đối */
     top: 10px; /* Căn chỉnh khoảng cách từ trên xuống */
     left: 50%; /* Đưa điểm giữa phần tử về giữa trang */
     transform: translateX(-50%); /* Dịch chuyển để chữ căn giữa hoàn toàn */
     z-index: 10; /* Đảm bảo chữ nằm trên cùng */
-    font-size: 40px; /* Kích thước chữ */
+    font-size: 50px; /* Kích thước chữ */
 }
 .layout {
     display: flex;
@@ -41,6 +41,7 @@ body.home-page h1 {
 
 /* Widget Container */
 .widget-container {
+    margin-top: 20px;
     display: flex;
     justify-content: space-between;
     gap: 20px;
@@ -50,7 +51,7 @@ body.home-page h1 {
     flex: 1;
     background-color: rgba(0,0,0,0.5); /* Nền trong suốt */
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     color: #f1f1f1; /* Màu chữ sáng */
     /*box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Đổ bóng */
@@ -59,7 +60,7 @@ body.home-page h1 {
 .widget h3 {
     font-size: 24px;
     color: #ffffff; 
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .widget p {
