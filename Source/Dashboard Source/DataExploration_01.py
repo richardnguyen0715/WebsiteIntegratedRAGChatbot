@@ -51,11 +51,11 @@ df = df.rename(columns={
     'civic_education_score': 'GDCD'
 })
 subject_colors = {
-    'Toán': 'red',
+    'Toán': 'dodgerblue',
     'Văn': 'blue',
-    'Vật Lý': 'green',
+    'Vật Lý': 'lime',
     'Hóa Học': 'purple',
-    'Sinh Học': 'orange',
+    'Sinh Học': 'darkorange',
     'Tiếng Anh': 'brown',
     'Lịch Sử': 'pink',
     'Địa Lý': 'cyan',
@@ -72,7 +72,6 @@ def section_01_01():
             x=sorted_averages.index, 
             y=sorted_averages.values, 
             name='Điểm trung bình',
-            marker=dict(color='rgba(0, 114, 178, 0.8)')
         )
     ])
     bar_avg_chart.update_layout(
@@ -84,11 +83,9 @@ def section_01_01():
 
     # 3. Pie Chart: Subject Coverage (Non-Null Counts)
     coverage = df.notnull().sum()
-    colors = ['rgba(0, 114, 178, 0.8)', 'rgba(213, 94, 0, 0.8)', 'rgba(0, 158, 115, 0.8)', 
-              'rgba(240, 228, 66, 0.8)', 'rgba(86, 180, 233, 0.8)', 
-              'rgba(230, 159, 0, 0.8)', 'rgba(204, 121, 167, 0.8)', 'rgba(0, 158, 115, 0.8)']
+    colors=['dodgerblue', 'blue', 'lime', 'purple', 'darkorange', 'brown', 'pink', 'cyan', 'magenta']
     pie_chart = go.Figure(data=[
-        go.Pie(labels=coverage.index, values=coverage.values, marker=dict(colors=colors))
+        go.Pie(labels=coverage.index, values=coverage.values,marker=dict(colors=colors))
     ])
     pie_chart.update_layout(title="Tỉ lệ học sinh đã thi mỗi môn")
     pie_chart_json = json.dumps(pie_chart, cls=plotly.utils.PlotlyJSONEncoder)
