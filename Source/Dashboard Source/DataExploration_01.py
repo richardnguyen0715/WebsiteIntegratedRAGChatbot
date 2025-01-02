@@ -26,7 +26,7 @@ import json
 import pandas as pd
 
 # Dữ liệu mẫu
-data = pd.read_csv('Dataset/THPTQG_2022_processed.csv')
+data = pd.read_csv('Dataset/THPTQG_2021_processed.csv')
 # Convert to DataFrame
 raw_df = pd.DataFrame(data)
 # Hàm làm tròn điểm về bội số gần nhất của 0.25

@@ -43,7 +43,7 @@ def analyze_student_performance(df):
 
 def section_03_01():
     # Load and prepare data
-    data = pd.read_csv('Dataset/THPTQG_2022_processed.csv')
+    data = pd.read_csv('Dataset/THPTQG_2021_processed.csv')
     df = pd.DataFrame(data)
     df = df.drop(columns=['id'])
     
@@ -178,7 +178,7 @@ def section_03_01():
 
 def section_03_02():
     # Load and prepare data
-    data = pd.read_csv('Dataset/THPTQG_2022_processed.csv')
+    data = pd.read_csv('Dataset/THPTQG_2021_processed.csv')
     df = pd.DataFrame(data)
     df = df.drop(columns=['id'])
     
@@ -274,7 +274,7 @@ def section_03_02():
 
 def section_03_03():
     # Load and prepare data
-    data = pd.read_csv('Dataset/THPTQG_2022_processed.csv')
+    data = pd.read_csv('Dataset/THPTQG_2021_processed.csv')
     df = pd.DataFrame(data)
     df = df.drop(columns=['id'])
     
@@ -323,7 +323,7 @@ def section_03_03():
 
 def section_03_04():
     # Load and prepare data
-    data = pd.read_csv('Dataset/THPTQG_2022_processed.csv')
+    data = pd.read_csv('Dataset/THPTQG_2021_processed.csv')
     df = pd.DataFrame(data)
     df = df.drop(columns=['id'])
     
@@ -404,7 +404,7 @@ def section_03_04():
 
 def section_03_05():
     # Load and prepare data
-    data = pd.read_csv('Dataset/THPTQG_2022_processed.csv')
+    data = pd.read_csv('Dataset/THPTQG_2021_processed.csv')
     df = pd.DataFrame(data)
     df = df.drop(columns=['id'])
     
