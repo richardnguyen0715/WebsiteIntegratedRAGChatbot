@@ -15,12 +15,12 @@
             </div>
             <!-- Row 1: Summary Widgets -->
             <div style="display: flex; flex-direction: column; gap: 20px; width: 30%; height: 30%; margin-top: 150px;">
-                <div class="base" style="font-size: 18px; background-color: #0e4c66; border-radius: 20px; padding: 20px; text-align: center;">
+                <div class="base" style="font-size: 18px; background-color: #1e343d; border-radius: 20px; padding: 20px; text-align: center;">
                     <p><strong>Tương quan mạnh nhất</strong></p>
                     <p>{{ strongest_correlations[0].subject1 }} - {{ strongest_correlations[0].subject2 }}</p>
                     <p>{{ "%.3f"|format(strongest_correlations[0].correlation) }}</p>
                 </div>
-                <div class="base" style="font-size: 18px; background-color: #0e4c66; border-radius: 20px; padding: 20px; text-align: center;">
+                <div class="base" style="font-size: 18px; background-color: #1e343d; border-radius: 20px; padding: 20px; text-align: center;">
                     <p><strong>Tương quan yếu nhất</strong></p>
                     <p>{{ weakest_correlations[0].subject1 }} - {{ weakest_correlations[0].subject2 }}</p>
                     <p>{{ "%.3f"|format(weakest_correlations[0].correlation) }}</p>
@@ -119,7 +119,7 @@
                 <p style="color: white">Các môn học có điểm trung bình và tương quan với tổng điểm cao nhất</p>
                 <div>
                     {% for stat in launch_pad_stats[:3] %}
-                    <div class="base" style="justify-self: center; width: 300px; background-color: #0e4c66; border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 20px;"  >
+                    <div class="base" style="justify-self: center; width: 300px; background-color: #1e343d; border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 20px;"  >
                         <h3 style="font-size: 16px;">{{ stat.subject }}</h3>
                         <p style="font-size: 16px;">Điểm trung bình: {{ "%.2f"|format(stat.mean_score) }}</p>
                         <p style="font-size: 16px;">Tương quan tổng điểm: {{ "%.3f"|format(stat.total_correlation) }}</p>
