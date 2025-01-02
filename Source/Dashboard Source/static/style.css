@@ -90,7 +90,7 @@ body.home-page h1 {
 /* Sidebar styles */
 .sidebar {
     width: 70px;
-    background-color: #1d5ae7;
+    background-color: #192647;
     position: fixed; /* Đặt sidebar cố định */
     top: 0;
     bottom: 0;
@@ -118,7 +118,7 @@ body.home-page h1 {
 
 .sidebar a.active,
 .sidebar a:hover {
-    background-color: #007bff;
+    background-color: #7b9cc0;
     color: white;
 }
 
@@ -414,14 +414,14 @@ body.home-page h1 {
 }
 /* thêm màu nên cho section-1 */
 body.Section-1 {
-    background-color: #1c96ca;
+    background-color: #7099ab;
     padding: 20px;
     border-radius: 10px;
   
 }
 /*thêm màu nền cho section-2 */
 body.Section-2 {
-    background-color: #1c96ca;
+    background-color: #7099ab;
     padding: 20px;
     border-radius: 10px;
     
@@ -446,7 +446,7 @@ body.Section-2 {
 /* Add background color for section-3 */
 /* Update Section-3 styling */
 body.Section-3 {
-    background-color: #1c96ca;
+    background-color: #7099ab;
     padding: 20px;
     border-radius: 10px;
     min-height: 100vh;
