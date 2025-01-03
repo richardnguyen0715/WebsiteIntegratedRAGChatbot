@@ -316,6 +316,9 @@ body.home-page h1 {
 }
 .chat-message.bot .message-content p {
     background-color: rgb(52, 70, 84);
+    padding: 10px;
+    color: white;
+    border-radius: 20px;
 }
 /* Input Area */
 .chat-input {
