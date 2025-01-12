@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Chatbot{% endblock %}
+
+{% block content %}
+<div id="chat-header">
+    <h1>Welcome to Chatbot</h1>
+    <p>Ask me anything or share a file/image for assistance!</p>
+</div>
+
+<div class="chat-container">
+    <div id="chat-window">
+        <div id="chat-messages" style="margin-bottom: 20px;"></div>
+
+        <!-- Input Box -->
+        <input type="text" id="chat-input-box" placeholder="Type a message..." />
+
+        <!-- File Upload và Send Button -->
+        <div style="display: flex; gap: 10px; align-items: center; margin-top: 10px;">
+            <input type="file" id="image-upload" />
+            <button id="send-button" style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
+                Send
+            </button>
+        </div>
+
+        <!-- Clipboard Upload -->
+        <div id="clipboard-upload" style="border: 1px dashed #ccc; padding: 10px; margin-top: 10px; text-align: center;">
+            <p>Paste an image from clipboard:</p>
+        </div>
+
+        <!-- Enter Hint -->
+        <p id="enter-message-hint" style="text-align: center; margin-top: 5px; font-size: 14px; color: #888;">
+            Or press Enter to send message
+        </p>
+
+        <p id="file-note" style="margin-top: 10px; font-size: 14px; color: #555;">
+            Note: Currently, the model supports files of types <strong>txt, pdf, docx, xlsx</strong>, and images.
+        </p>
+
+    </div>
+</div>
+<script src="/static/script.js"></script> <!-- Import file script.js -->
+{% endblock %}

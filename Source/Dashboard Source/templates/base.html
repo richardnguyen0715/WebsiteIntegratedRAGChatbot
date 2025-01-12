@@ -25,6 +25,9 @@
             <a href="/section3" class="{% if request.path == '/section3' %}active{% endif %}">
                 <i class="fa-solid fa-draw-polygon"></i>
             </a>
+            <a href="/chatbot" class="{% if request.path == '/chatbot' %}active{% endif %}" title="Chatbot">
+                <i class="fas fa-robot"></i>
+            </a>            
         </nav>
         
 
@@ -33,59 +36,7 @@
             {% block content %}{% endblock %}
         </div>
     </div>
-
-    <!-- Chatbot -->
-    <div id="chat-icon" onclick="toggleChat()">
-        <i class="fas fa-comment"></i>
-    </div>
-    <div id="chat-window" class="chat-window">
-        <div class="chat-header">
-            <div class="chat-header-info">
-                <span class="chat-name">AI Assistant</span>
-            </div>
-            <span class="close-btn" style="cursor:pointer;" onclick="toggleChat()">&times;</span>
-        </div>
-        <div class="chat-body">
-            <div id="chat-messages" class="chat-messages">
-            </div>
-            <div class="chat-input">
-                <input type="text" id="chat-input-box" placeholder="Type a message...">
-                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
-            </div>
-        </div>
-    </div>
-    <!-- Chatbox Respnose Script -->
-    <script>
-        document.querySelector("#send-button").addEventListener("click", async () => {
-            const userMessage = document.querySelector("#user-input").value.trim();
-            if (!userMessage) return; // Không gửi tin nhắn trống
-    
-            // Hiển thị tin nhắn người dùng
-            const messagesDiv = document.querySelector("#messages");
-            messagesDiv.innerHTML += `<div class="user-message"><strong>You:</strong> ${userMessage}</div>`;
-    
-            // Gửi tin nhắn tới Flask server
-            try {
-                const response = await fetch("/chat", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ message: userMessage }),
-                });
-    
-                const data = await response.json();
-                messagesDiv.innerHTML += `<div class="bot-message"><strong>Bot:</strong> ${data.response}</div>`;
-            } catch (error) {
-                messagesDiv.innerHTML += `<div class="bot-message"><strong>Bot:</strong> Error connecting to server</div>`;
-            }
-    
-            // Reset input
-            document.querySelector("#user-input").value = "";
-        });
-    </script>
-
-
     <script src="/static/script.js"></script>
+    
 </body>
 </html>

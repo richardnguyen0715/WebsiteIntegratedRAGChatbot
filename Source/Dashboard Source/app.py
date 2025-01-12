@@ -19,33 +19,40 @@ import plotly.graph_objects as go
 import json
 import plotly
 import requests
+import openai
+import io
+from PIL import Image
+import pytesseract  # OCR library
+from PyPDF2 import PdfReader
+from docx import Document
+import openpyxl
+import chardet
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 app = Flask(__name__)
 
-# LM Studio Local Server
-BASE_URL = "http://localhost:1234"
-
-def query_lmstudio(prompt):
-    """
-    Gửi truy vấn tới LM Studio Local Server và nhận phản hồi.
-    """
+# Set your OpenAI API key
+openai.api_key = "Thay key vô rồi chạy"
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+def query_chatgpt(prompt):
     try:
-        response = requests.post(
-            f"{BASE_URL}/v1/chat/completions",
-            json={
-                "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 2000,
-                "temperature": 0.7,
-            }
+        print(f"Sending to OpenAI: {prompt}")  # Debug
+        response = openai.ChatCompletion.create(
+            model="gpt-4o",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=2000,
+            temperature=0.7,
         )
-        if response.status_code == 200:
-            # Get the response message from the LLM model
-            return response.json()["choices"][0]["message"]["content"]
-        else:
-            return f"Error {response.status_code}: {response.text}"
+        print(f"Response from OpenAI: {response}")  # Debug
+        return response['choices'][0]['message']['content']
     except Exception as e:
-        return f"Error connecting to LM Studio: {e}"
+        print(f"Error querying OpenAI: {e}")  # Debug
+        return f"Error querying OpenAI: {e}"
 
+UPLOAD_FOLDER = 'uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 #---------------------------------------------------- Không chỉnh sửa vùng ở trên. Trừ việc thêm thư viện vào.
 
@@ -115,11 +122,118 @@ def section3():
                         radar_chart_social_sciences=radar_chart_social_sciences_json,
                         bar_chart_social_sciences=bar_chart_social_sciences_json
                         )  
-@app.route('/chat', methods=['POST'])
-def chat():
-    user_message = request.json.get("message")
-    bot_response = query_lmstudio(user_message)  # Gửi câu hỏi tới LM Studio
-    return jsonify({"response": bot_response})
+
+
+
+
+
+
+#---------------------- Chat bot activation---------------------------------------------
+
+@app.route('/chatbot')
+def chatbot_page():
+    return render_template('chatbot.html')
+
+@app.route('/upload-image', methods=['POST'])
+def upload_image():
+    try:
+        # User message
+        message = request.form.get('message', '')
+
+        # Get files
+        if 'file' in request.files:
+            file = request.files['file']
+            if file:
+                # Save to upload
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+                file.save(filepath)
+
+                # Classificator
+                extracted_text = ""
+                file_extension = os.path.splitext(filepath)[1].lower()
+
+                # Images (PNG, JPG, JPEG)
+                if file_extension in ['.png', '.jpg', '.jpeg']:
+                    try:
+                        from PIL import Image
+                        import pytesseract
+                        img = Image.open(filepath)
+                        extracted_text = pytesseract.image_to_string(img)
+                    except Exception as e:
+                        print(f"Error processing image: {e}")
+                        extracted_text = "Error processing image."
+
+                # TXT
+                elif file_extension == '.txt':
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as txt_file:
+                            extracted_text = txt_file.read()
+                    except Exception as e:
+                        print(f"Error processing text file: {e}")
+                        extracted_text = "Error processing text file."
+
+                # PDF
+                elif file_extension == '.pdf':
+                    try:
+                        from PyPDF2 import PdfReader
+                        reader = PdfReader(filepath)
+                        for page in reader.pages:
+                            extracted_text += page.extract_text()
+                    except Exception as e:
+                        print(f"Error processing PDF file: {e}")
+                        extracted_text = "Error processing PDF file."
+
+                # DOCX
+                elif file_extension == '.docx':
+                    try:
+                        from docx import Document
+                        doc = Document(filepath)
+                        for paragraph in doc.paragraphs:
+                            extracted_text += paragraph.text + '\n'
+                    except Exception as e:
+                        print(f"Error processing DOCX file: {e}")
+                        extracted_text = "Error processing DOCX file."
+
+                # XLSX
+                elif file_extension == '.xlsx':
+                    try:
+                        import openpyxl
+                        workbook = openpyxl.load_workbook(filepath)
+                        for sheet_name in workbook.sheetnames:
+                            sheet = workbook[sheet_name]
+                            for row in sheet.iter_rows(values_only=True):
+                                extracted_text += '\t'.join([str(cell) if cell else '' for cell in row]) + '\n'
+                    except Exception as e:
+                        print(f"Error processing XLSX file: {e}")
+                        extracted_text = "Error processing XLSX file."
+
+                else:
+                    extracted_text = "Unsupported file type."
+
+                # Create a context and send to ChatGPT
+                full_context = f"User Message: {message}\nExtracted Text: {extracted_text}"
+                print(f"Sending to OpenAI: {full_context}")
+
+                # Send the request to GPT
+                response = query_chatgpt(full_context)
+                print(f"Response from OpenAI: {response}")
+                return jsonify({'response': response}), 200
+
+        # Just message ( not file attached )
+        if message:
+            print(f"Received message: {message}")
+            response = query_chatgpt(message)
+            return jsonify({'response': response}), 200
+
+        # Files
+        return jsonify({'error': 'No valid input provided'}), 400
+
+    except Exception as e:
+        print(f"Error in upload_image: {e}")
+        return jsonify({'error': 'Internal Server Error', 'details': str(e)}), 500
+
+# -------------------------------------------------------------------------------------------
+
 
 if __name__ == "__main__":
     app.run(debug=True)
