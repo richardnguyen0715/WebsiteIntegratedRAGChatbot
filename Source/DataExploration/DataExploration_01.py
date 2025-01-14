@@ -26,7 +26,7 @@ import json
 import pandas as pd
 
 # Dữ liệu mẫu
-data = pd.read_csv('Dataset/THPTQG_2021_processed.csv')
+data = pd.read_csv('Dataset/THPTQG_2023_processed.csv')
 # Convert to DataFrame
 raw_df = pd.DataFrame(data)
 # Hàm làm tròn điểm về bội số gần nhất của 0.25
@@ -36,19 +36,19 @@ def lam_tron_diem(diem):
         return diem  # Return NaN as is
     return round(diem / 0.25) * 0.25
 # Loại bỏ cột 'id'
-df = raw_df.drop(columns=['id'])
-df['literature_score'] = df['literature_score'].apply(lam_tron_diem)
+df = raw_df.drop(columns=['Student ID'])
+df['Literature'] = df['Literature'].apply(lam_tron_diem)
 #đổi tên các cột về tên môn
 df = df.rename(columns={
-    'mathematics_score': 'Toán',
-    'literature_score': 'Văn',
-    'physics_score': 'Vật Lý',
-    'chemistry_score': 'Hóa Học',
-    'biology_score': 'Sinh Học',
-    'english_score': 'Tiếng Anh',
-    'history_score': 'Lịch Sử',
-    'geography_score': 'Địa Lý',
-    'civic_education_score': 'GDCD'
+    'Mathematics': 'Toán',
+    'Literature': 'Văn',
+    'Physics': 'Vật Lý',
+    'Chemistry': 'Hóa Học',
+    'Biology': 'Sinh Học',
+    'Foreign language': 'Tiếng Anh',
+    'History': 'Lịch Sử',
+    'Geography': 'Địa Lý',
+    'Civic education': 'GDCD'
 })
 subject_colors = {
     'Toán': 'dodgerblue',
@@ -61,7 +61,7 @@ subject_colors = {
     'Địa Lý': 'cyan',
     'GDCD': 'magenta'
 }
-#-------------------- Thực hiện xử lý các hàm dưới này nha mấy ní.
+#-------------------- .
 
 def section_01_01():
     # 1. Bar Chart: Average Scores by Subject

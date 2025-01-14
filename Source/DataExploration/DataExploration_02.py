@@ -6,9 +6,9 @@ import json
 import pandas as pd
 
 
-#-------------------- Thực hiện xử lý các hàm dưới này nha mấy ní.
+#-------------------- .
 # Dữ liệu mẫu
-data = pd.read_csv('Dataset/THPTQG_2021_processed.csv')
+data = pd.read_csv('Dataset/THPTQG_2023_processed.csv')
 #convert to DataFrame
 raw_df = pd.DataFrame(data)
 # Hàm làm tròn điểm về bội số gần nhất của 0.25
@@ -20,19 +20,19 @@ def lam_tron_diem_0_25(diem):
 def lam_tron_0_5(diem):
         return round(diem * 2) / 2
 # Loại bỏ cột 'id'
-df = raw_df.drop(columns=['id'])
-df['literature_score'] = df['literature_score'].apply(lam_tron_diem_0_25)
+df = raw_df.drop(columns=['Student ID'])
+df['Literature'] = df['Literature'].apply(lam_tron_diem_0_25)
 #đổi tên các cột về tên môn
 df = df.rename(columns={
-'mathematics_score': 'Toán',
-'literature_score': 'Văn',
-'physics_score': 'Vật Lý',
-'chemistry_score': 'Hóa Học',
-'biology_score': 'Sinh Học',
-'english_score': 'Tiếng Anh',
-'history_score': 'Lịch Sử',
-'geography_score': 'Địa Lý',
-'civic_education_score': 'GDCD'
+'Mathematics': 'Toán',
+'Literature': 'Văn',
+'Physics': 'Vật Lý',
+'Chemistry': 'Hóa Học',
+'Biology': 'Sinh Học',
+'Foreign language': 'Tiếng Anh',
+'History': 'Lịch Sử',
+'Geography': 'Địa Lý',
+'Civic education': 'GDCD'
 })
 # Tính tổng điểm từng khối
 df['A00'] = df['Toán'] + df['Vật Lý'] + df['Hóa Học']
@@ -143,7 +143,7 @@ def section_02_02(df):
         ))
         grouped_bar_chart.update_layout(
             barmode='group',
-            title=f'Biểu đồ cột thể hiện sự chênh lệch điểm của khối {block}',
+            title=f'Biểu đồ cột thể hiện điểm trung bình theo môn trong khối {block}',
             xaxis_title='Môn học',
             yaxis_title='Điểm trung bình',
             yaxis=dict(range=[0, 10])
@@ -241,26 +241,31 @@ def section_02_05(df):
     return horizontal_bar_charts
 
 def section_02_06(df):
-    natural_subjects = ['Toán', 'Vật Lý', 'Hóa Học', 'Sinh Học']
-    social_subjects = ['Văn', 'Lịch Sử', 'Địa Lý', 'GDCD']
+    # Define natural and social science subjects
+    natural_subjects = ['Vật Lý', 'Hóa Học', 'Sinh Học']
+    social_subjects = ['Lịch Sử', 'Địa Lý', 'GDCD']
 
-    df['avg_natural'] = df[natural_subjects].mean(axis=1)
-    df['avg_social'] = df[social_subjects].mean(axis=1)
+    # Count the number of students who took all natural science subjects
+    natural_group = df.dropna(subset=natural_subjects)
+    num_natural_students = len(natural_group)
 
-    natural_group = df[df['avg_natural'] > df['avg_social'] + 1]
-    social_group = df[df['avg_social'] > df['avg_natural'] + 1]
-    balanced_group = df[(df['avg_natural'] <= df['avg_social'] + 1) & (df['avg_social'] <= df['avg_natural'] + 1)]
+    # Count the number of students who took all social science subjects
+    social_group = df.dropna(subset=social_subjects)
+    num_social_students = len(social_group)
 
-    labels = ['Thiên về tự nhiên', 'Thiên về xã hội', 'Cân bằng']
-    values = [len(natural_group), len(social_group), len(balanced_group)]
+    # Labels and values for the donut chart
+    labels = ['Thiên về tự nhiên', 'Thiên về xã hội']
+    values = [num_natural_students, num_social_students]
 
-    colors = ['rgba(0, 114, 178, 0.8)', 'rgba(213, 94, 0, 0.8)', 'rgba(0, 158, 115, 0.8)'] 
+    # Colors for the donut chart
+    colors = ['rgba(0, 114, 178, 0.8)', 'rgba(213, 94, 0, 0.8)', 'rgba(0, 158, 115, 0.8)']
 
+    # Create the donut chart
     donut_chart = go.Figure(data=[go.Pie(
         labels=labels,
         values=values,
-        hole=0.4,  # Tạo lỗ trống ở giữa để thành biểu đồ donut
-        textinfo='percent', 
+        hole=0.4,  # Create a hole in the middle to make it a donut chart
+        textinfo='percent',
         marker=dict(colors=colors)
     )])
     donut_chart.update_layout(
@@ -268,47 +273,3 @@ def section_02_06(df):
     )
 
     return json.dumps(donut_chart, cls=plotly.utils.PlotlyJSONEncoder)
-
-def section_02_07(df):
-    natural_subjects = ['Toán', 'Vật Lý', 'Hóa Học', 'Sinh Học']
-    social_subjects = ['Văn', 'Lịch Sử', 'Địa Lý', 'GDCD']
-
-    df['avg_natural'] = df[natural_subjects].mean(axis=1)
-    df['avg_social'] = df[social_subjects].mean(axis=1)
-
-    natural_group = df[df['avg_natural'] > df['avg_social'] + 1]
-    social_group = df[df['avg_social'] > df['avg_natural'] + 1]
-    balanced_group = df[(df['avg_natural'] <= df['avg_social'] + 1) & (df['avg_social'] <= df['avg_natural'] + 1)]
-
-    blocks = ['A00', 'A01', 'B00', 'C00', 'D00']
-    group_labels = ['Thiên về tự nhiên', 'Thiên về xã hội', 'Cân bằng']
-    group_data = {
-        'Thiên về tự nhiên': [],
-        'Thiên về xã hội': [],
-        'Cân bằng': []
-    }
-
-    for block in blocks:
-        group_data['Thiên về tự nhiên'].append(len(natural_group[natural_group[block].notna()]))
-        group_data['Thiên về xã hội'].append(len(social_group[social_group[block].notna()]))
-        group_data['Cân bằng'].append(len(balanced_group[balanced_group[block].notna()]))
-
-    stacked_bar_chart = go.Figure()
-    colors = ['rgba(0, 114, 178, 0.8)', 'rgba(213, 94, 0, 0.8)', 'rgba(0, 158, 115, 0.8)']  # Blue, Vermillion, Green
-
-    for group_name, color in zip(group_labels, colors):
-        stacked_bar_chart.add_trace(go.Bar(
-            x=blocks,
-            y=group_data[group_name],
-            name=group_name,
-            marker=dict(color=color)
-        ))
-
-    stacked_bar_chart.update_layout(
-        title='Tỷ lệ học sinh thuộc từng nhóm thiên hướng trong các khối thi',
-        xaxis_title='Khối thi',
-        yaxis_title='Số lượng học sinh',
-        barmode='stack'
-    )
-
-    return json.dumps(stacked_bar_chart, cls=plotly.utils.PlotlyJSONEncoder)

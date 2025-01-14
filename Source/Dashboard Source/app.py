@@ -90,7 +90,6 @@ def section2():
     pie_charts_json = section_02_04(df)
     horizontal_bar_charts_json = section_02_05(df)
     student_group_donut_chart_json = section_02_06(df)
-    student_stacked_bar_chart_json = section_02_07(df)
     return render_template(
         'section2.html',
         histogram_charts=histogram_charts_json,
@@ -99,8 +98,7 @@ def section2():
         density_plots=density_plots_json,
         pie_charts=pie_charts_json,
         horizontal_bar_charts=horizontal_bar_charts_json,
-        student_group_donut_chart=student_group_donut_chart_json,
-        student_stacked_bar_chart=student_stacked_bar_chart_json
+        student_group_donut_chart=student_group_donut_chart_json
     )
                            
 @app.route('/section3')

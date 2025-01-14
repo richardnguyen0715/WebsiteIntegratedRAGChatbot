@@ -1,7 +1,7 @@
 from Libraries import *
 from Shared_Functions import *
 
-#-------------------- Thực hiện xử lý các hàm dưới này nha mấy ní.
+#-------------------- .
 
 def section_home_01():
     line_chart = go.Figure(data=[

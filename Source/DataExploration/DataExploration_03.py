@@ -41,27 +41,30 @@ def analyze_student_performance(df):
     
     return performance_analysis
 
-def section_03_01():
-    # Load and prepare data
-    data = pd.read_csv('Dataset/THPTQG_2021_processed.csv')
-    df = pd.DataFrame(data)
-    df = df.drop(columns=['id'])
-    
-    # Rename columns to Vietnamese
-    df = df.rename(columns={
-        'mathematics_score': 'Toán',
-        'literature_score': 'Văn',
-        'physics_score': 'Vật Lý',
-        'chemistry_score': 'Hóa Học',
-        'biology_score': 'Sinh Học',
-        'english_score': 'Tiếng Anh',
-        'history_score': 'Lịch Sử',
-        'geography_score': 'Địa Lý',
-        'civic_education_score': 'GDCD'
-    })
 
+
+# Dữ liệu mẫu
+data = pd.read_csv('Dataset/THPTQG_2023_processed.csv')
+#convert to DataFrame
+raw_df = pd.DataFrame(data)
+
+# Loại bỏ cột 'id'
+raw_df = raw_df.drop(columns=['Student ID'])
+#đổi tên các cột về tên môn
+raw_df = raw_df.rename(columns={
+'Mathematics': 'Toán',
+'Literature': 'Văn',
+'Physics': 'Vật Lý',
+'Chemistry': 'Hóa Học',
+'Biology': 'Sinh Học',
+'Foreign language': 'Tiếng Anh',
+'History': 'Lịch Sử',
+'Geography': 'Địa Lý',
+'Civic education': 'GDCD'
+})
+def section_03_01():
     # Calculate correlation matrix
-    correlation_matrix = df.corr()
+    correlation_matrix = raw_df.corr()
 
     # Create heatmap
     heatmap = go.Figure(data=go.Heatmap(
@@ -112,6 +115,7 @@ def section_03_01():
     weakest_correlations = sorted(correlations, key=lambda x: abs(x['correlation']))[:10]
     #--------------------------------------------------------------------------------------------------------#
     # Calculate total score and launch pad analysis
+    df = raw_df.copy()
     df['total_score'] = df[['Toán', 'Văn', 'Vật Lý', 'Hóa Học', 'Sinh Học', 
                            'Tiếng Anh', 'Lịch Sử', 'Địa Lý', 'GDCD']].sum(axis=1)
     
@@ -177,31 +181,13 @@ def section_03_01():
     
 
 def section_03_02():
-    # Load and prepare data
-    data = pd.read_csv('Dataset/THPTQG_2021_processed.csv')
-    df = pd.DataFrame(data)
-    df = df.drop(columns=['id'])
-    
-    # Rename columns to Vietnamese
-    df = df.rename(columns={
-        'mathematics_score': 'Toán',
-        'literature_score': 'Văn',
-        'physics_score': 'Vật Lý',
-        'chemistry_score': 'Hóa Học',
-        'biology_score': 'Sinh Học',
-        'english_score': 'Tiếng Anh',
-        'history_score': 'Lịch Sử',
-        'geography_score': 'Địa Lý',
-        'civic_education_score': 'GDCD'
-    })
-
     # Define subject groups
     sciences = ['Toán', 'Vật Lý', 'Hóa Học', 'Sinh Học', 'Tiếng Anh']
 
     # Calculate average scores for each combination
-    avg_scores_A00 = df[['Toán', 'Vật Lý', 'Hóa Học']].mean()
-    avg_scores_A01 = df[['Toán', 'Vật Lý', 'Tiếng Anh']].mean()
-    avg_scores_B00 = df[['Toán', 'Hóa Học', 'Sinh Học']].mean()
+    avg_scores_A00 = raw_df[['Toán', 'Vật Lý', 'Hóa Học']].mean()
+    avg_scores_A01 = raw_df[['Toán', 'Vật Lý', 'Tiếng Anh']].mean()
+    avg_scores_B00 = raw_df[['Toán', 'Hóa Học', 'Sinh Học']].mean()
 
     # Ensure all subjects are included in each combination
     avg_scores_A00 = avg_scores_A00.reindex(sciences, fill_value=0)
@@ -273,28 +259,11 @@ def section_03_02():
     return radar_chart_json
 
 def section_03_03():
-    # Load and prepare data
-    data = pd.read_csv('Dataset/THPTQG_2021_processed.csv')
-    df = pd.DataFrame(data)
-    df = df.drop(columns=['id'])
-    
-    # Rename columns to Vietnamese
-    df = df.rename(columns={
-        'mathematics_score': 'Toán',
-        'literature_score': 'Văn',
-        'physics_score': 'Vật Lý',
-        'chemistry_score': 'Hóa Học',
-        'biology_score': 'Sinh Học',
-        'english_score': 'Tiếng Anh',
-        'history_score': 'Lịch Sử',
-        'geography_score': 'Địa Lý',
-        'civic_education_score': 'GDCD'
-    })
-
     # Define subject groups
     natural_sciences = ['Toán', 'Vật Lý', 'Hóa Học', 'Sinh Học']
 
     # Calculate total score
+    df = raw_df.copy()
     df['total_score'] = df[natural_sciences].sum(axis=1)
 
     # Calculate correlation with total score
@@ -322,30 +291,12 @@ def section_03_03():
     return bar_chart_json
 
 def section_03_04():
-    # Load and prepare data
-    data = pd.read_csv('Dataset/THPTQG_2021_processed.csv')
-    df = pd.DataFrame(data)
-    df = df.drop(columns=['id'])
-    
-    # Rename columns to Vietnamese
-    df = df.rename(columns={
-        'mathematics_score': 'Toán',
-        'literature_score': 'Văn',
-        'physics_score': 'Vật Lý',
-        'chemistry_score': 'Hóa Học',
-        'biology_score': 'Sinh Học',
-        'english_score': 'Tiếng Anh',
-        'history_score': 'Lịch Sử',
-        'geography_score': 'Địa Lý',
-        'civic_education_score': 'GDCD'
-    })
-
     # Define subject groups
     social_sciences = ['Toán', 'Văn', 'Lịch Sử', 'Địa Lý', 'GDCD', 'Tiếng Anh']
 
     # Calculate average scores for each combination
-    avg_scores_C00 = df[['Văn', 'Lịch Sử', 'Địa Lý']].mean()
-    avg_scores_D00 = df[['Văn', 'Toán', 'Tiếng Anh']].mean()
+    avg_scores_C00 = raw_df[['Văn', 'Lịch Sử', 'Địa Lý']].mean()
+    avg_scores_D00 = raw_df[['Văn', 'Toán', 'Tiếng Anh']].mean()
 
     # Ensure all subjects are included in each combination
     avg_scores_C00 = avg_scores_C00.reindex(social_sciences, fill_value=0)
@@ -403,28 +354,11 @@ def section_03_04():
     return radar_chart_json
 
 def section_03_05():
-    # Load and prepare data
-    data = pd.read_csv('Dataset/THPTQG_2021_processed.csv')
-    df = pd.DataFrame(data)
-    df = df.drop(columns=['id'])
-    
-    # Rename columns to Vietnamese
-    df = df.rename(columns={
-        'mathematics_score': 'Toán',
-        'literature_score': 'Văn',
-        'physics_score': 'Vật Lý',
-        'chemistry_score': 'Hóa Học',
-        'biology_score': 'Sinh Học',
-        'english_score': 'Tiếng Anh',
-        'history_score': 'Lịch Sử',
-        'geography_score': 'Địa Lý',
-        'civic_education_score': 'GDCD'
-    })
-
     # Define subject groups
     natural_sciences = ['Văn', 'Lịch Sử', 'Địa Lý', 'GDCD']
 
     # Calculate total score
+    df = raw_df.copy()
     df['total_score'] = df[natural_sciences].sum(axis=1)
 
     # Calculate correlation with total score

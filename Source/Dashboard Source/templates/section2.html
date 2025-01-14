@@ -4,23 +4,17 @@
 
 {% block content %}
 <body class="Section-2">
-    <h1 style="justify-self: center; text-transform: uppercase;color: black">Phần 2</h1>
+    <h1 style="justify-self: center; text-transform: uppercase; color: black">Phần 2</h1>
     <p>Phân tích tổng quan nhóm học sinh theo điểm mạnh, điểm yếu.</p>
 </body>
 <div>
     <h3 style ="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 30px;">Phân loại học sinh dựa theo thiên hướng học tập </h3>
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
+    <div style="justify-self: center;">
         <!-- Biểu đồ donut phân loại học sinh -->
         <div id="student-group-donut-chart" style="width: 50%; margin-top: 20px;"></div>
         <script>
             var studentGroupDonutChartData = {{ student_group_donut_chart | safe }};
             Plotly.newPlot('student-group-donut-chart', studentGroupDonutChartData.data, studentGroupDonutChartData.layout);
-        </script>
-        <!-- Biểu đồ cột xếp chồng phân loại học sinh theo khối thi -->
-        <div id="student-stacked-bar-chart" style="width: 50%; margin-top: 20px;"></div>
-        <script>
-            var studentStackedBarChartData = {{ student_stacked_bar_chart | safe }};
-            Plotly.newPlot('student-stacked-bar-chart', studentStackedBarChartData.data, studentStackedBarChartData.layout);
         </script>
     </div>
 
