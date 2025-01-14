@@ -167,14 +167,14 @@ body.home-page h1 {
 }
 /* thêm màu nên cho section-1 */
 body.Section-1 {
-    background-color: #7099ab;
+    background-color: #bcc6d9;
     padding: 20px;
     border-radius: 10px;
   
 }
 /*thêm màu nền cho section-2 */
 body.Section-2 {
-    background-color: #7099ab;
+    background-color: #bcc6d9;
     padding: 20px;
     border-radius: 10px;
     
@@ -183,14 +183,14 @@ body.Section-2 {
 .Section-1 h1 {
     text-align: center;
     font-size: 24px;
-    color: #ffffff;
+    color: #070707;
     margin-bottom: 20px;
 }
 /*chỉnh dòng phân bố điểm thi trong thẻ h3 vào giữa trong section-1 */
 .Section-1 h3 {
     text-align: center;
     font-size: 24px;
-    color: #ffffff;
+    color: #070707;
     margin-bottom: 20px;
 }
 /* tạo khoảng cách giữa dòng phần bố điểm  các môn với 2 hình ở trên to lên 1 xíu, ý tôi là tạo khoảng cách giữa row 2 với ảnh của row 1 á */
@@ -199,7 +199,7 @@ body.Section-2 {
 /* Add background color for section-3 */
 /* Update Section-3 styling */
 body.Section-3 {
-    background-color: #7099ab;
+    background-color: #bcc6d9;
     padding: 20px;
     border-radius: 10px;
     min-height: 100vh;
@@ -213,14 +213,14 @@ body.Section-3 {
 .Section-3 h1 {
     text-align: center;
     font-size: 24px;
-    color: #ffffff;
+    color: #070707;
     margin-bottom: 20px;
 }
 
 .Section-3 h3 {
     text-align: center;
     font-size: 24px;
-    color: #ffffff;
+    color: #070707;
     margin-bottom: 20px;
 }
 
@@ -361,7 +361,7 @@ body {
 /* Input box and send button container */
 div[style*="display: flex"] {
     display: flex;
-    align-items: center; /* Center align vertically */
+    /*align-items: center; /* Center align vertically */
     gap: 10px; /* Spacing between elements */
     justify-content: space-between; /* Distribute space evenly */
     margin-top: 10px;
