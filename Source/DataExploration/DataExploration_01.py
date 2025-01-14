@@ -36,7 +36,7 @@ def lam_tron_diem(diem):
         return diem  # Return NaN as is
     return round(diem / 0.25) * 0.25
 # Loại bỏ cột 'id'
-df = raw_df.copy()
+df = raw_df.drop(columns=['Student ID'])
 df['Literature'] = df['Literature'].apply(lam_tron_diem)
 #đổi tên các cột về tên môn
 df = df.rename(columns={
