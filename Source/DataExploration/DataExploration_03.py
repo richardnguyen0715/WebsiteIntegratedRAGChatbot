@@ -100,14 +100,14 @@ def section_03_01():
     # Convert to JSON
     heatmap_json = json.dumps(heatmap, cls=plotly.utils.PlotlyJSONEncoder)
 
-    # Find strongest correlations
+    # Find strongest and weakest correlations
     correlations = []
     for i in range(len(correlation_matrix.columns)):
         for j in range(i+1, len(correlation_matrix.columns)):
             corr = {
                 'subject1': correlation_matrix.columns[i],
                 'subject2': correlation_matrix.columns[j],
-                'correlation': correlation_matrix.iloc[i,j]
+                'correlation': correlation_matrix.iloc[i, j]
             }
             correlations.append(corr)
     

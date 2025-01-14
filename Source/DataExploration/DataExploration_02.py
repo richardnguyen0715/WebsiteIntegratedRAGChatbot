@@ -233,7 +233,7 @@ def section_02_05(df):
             title=f'Điểm trung bình của các môn theo nhóm điểm của khối {block}',
             xaxis_title='Điểm trung bình',
             yaxis_title='Môn học',
-            xaxis=dict(range=[0, 10])
+            xaxis=dict(range=[0, 10], dtick=1)
         )
 
         horizontal_bar_charts[block] = json.dumps(horizontal_bar_chart, cls=plotly.utils.PlotlyJSONEncoder)
