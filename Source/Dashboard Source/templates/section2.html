@@ -93,11 +93,6 @@
                     Plotly.newPlot('density-plot-{{ block }}', densityPlotData.data, densityPlotData.layout);
                 </script> -->
                 <!-- Biểu đồ thanh ngang -->
-                <div id="horizontal-bar-{{ block }}" style="width: 100%; margin-top: 20px;"></div>
-                <script>
-                    var horizontalBarChartData = {{ horizontal_bar_charts[block] | safe }};
-                    Plotly.newPlot('horizontal-bar-{{ block }}', horizontalBarChartData.data, horizontalBarChartData.layout);
-                </script>
             </div>
         {% endfor %}
     </div>

@@ -88,7 +88,6 @@ def section2():
     grouped_bar_charts_json = section_02_02(df)
     density_plots_json = section_02_03(df)
     pie_charts_json = section_02_04(df)
-    horizontal_bar_charts_json = section_02_05(df)
     student_group_donut_chart_json = section_02_06(df)
     return render_template(
         'section2.html',
@@ -97,7 +96,6 @@ def section2():
         grouped_bar_charts=grouped_bar_charts_json,
         density_plots=density_plots_json,
         pie_charts=pie_charts_json,
-        horizontal_bar_charts=horizontal_bar_charts_json,
         student_group_donut_chart=student_group_donut_chart_json
     )
                            

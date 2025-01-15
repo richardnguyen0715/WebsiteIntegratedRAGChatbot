@@ -203,42 +203,6 @@ def section_02_04(df):
 
     return pie_charts
 
-def section_02_05(df):
-    horizontal_bar_charts = {}
-    colors = {
-        '< 15 điểm': 'rgba(0, 114, 178, 0.8)',  # Blue
-        '15-23 điểm': 'rgba(230, 159, 0, 0.8)',  # Orange
-        '> 23 điểm': 'rgba(86, 180, 233, 0.8)'  # Sky Blue
-    }
-    for block, subjects in subjects_for_blocks.items():
-        scores = df[subjects]
-        groups = {
-            '< 15 điểm': df[df[block] < 15][subjects],
-            '15-23 điểm': df[(df[block] >= 15) & (df[block] <= 23)][subjects],
-            '> 23 điểm': df[df[block] > 23][subjects]
-        }
-
-        horizontal_bar_chart = go.Figure()
-        for group_name, group_scores in groups.items():
-            avg_scores = group_scores.mean()
-            horizontal_bar_chart.add_trace(go.Bar(
-                x=avg_scores,
-                y=subjects,
-                orientation='h',
-                name=group_name, 
-                marker=dict(color=colors[group_name])
-            ))
-
-        horizontal_bar_chart.update_layout(
-            title=f'Điểm trung bình của các môn theo nhóm điểm của khối {block}',
-            xaxis_title='Điểm trung bình',
-            yaxis_title='Môn học',
-            xaxis=dict(range=[0, 10], dtick=1)
-        )
-
-        horizontal_bar_charts[block] = json.dumps(horizontal_bar_chart, cls=plotly.utils.PlotlyJSONEncoder)
-
-    return horizontal_bar_charts
 
 def section_02_06(df):
     # Define natural and social science subjects

@@ -167,14 +167,14 @@ body.home-page h1 {
 }
 /* thêm màu nên cho section-1 */
 body.Section-1 {
-    background-color: #bcc6d9;
+    background-color: #dedee4;
     padding: 20px;
     border-radius: 10px;
   
 }
 /*thêm màu nền cho section-2 */
 body.Section-2 {
-    background-color: #bcc6d9;
+    background-color: #dedee4;
     padding: 20px;
     border-radius: 10px;
     
@@ -199,7 +199,7 @@ body.Section-2 {
 /* Add background color for section-3 */
 /* Update Section-3 styling */
 body.Section-3 {
-    background-color: #bcc6d9;
+    background-color: #dedee4;
     padding: 20px;
     border-radius: 10px;
     min-height: 100vh;
@@ -226,7 +226,7 @@ body.Section-3 {
 
 /* Update correlation table styling for section-3 */
 .correlation-table {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.6);
     border-radius: 8px;
     margin-top: 20px;
 }
