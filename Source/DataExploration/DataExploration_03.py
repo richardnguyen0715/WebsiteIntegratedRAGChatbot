@@ -292,7 +292,7 @@ def section_03_03():
 
 def section_03_04():
     # Define subject groups
-    social_sciences = ['Toán', 'Văn', 'Lịch Sử', 'Địa Lý', 'GDCD', 'Tiếng Anh']
+    social_sciences = ['Toán', 'Văn', 'Lịch Sử', 'Địa Lý', 'Tiếng Anh']
 
     # Calculate average scores for each combination
     avg_scores_C00 = raw_df[['Văn', 'Lịch Sử', 'Địa Lý']].mean()
